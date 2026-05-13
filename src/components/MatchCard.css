@@ -1,0 +1,339 @@
+/* ===== MATCH CARD ===== */
+.match-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.match-card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.match-card.match-live {
+  border-color: rgba(255, 23, 68, 0.4);
+  animation: glow-live 2s ease-in-out infinite;
+}
+
+@keyframes glow-live {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 23, 68, 0.1); }
+  50% { box-shadow: 0 0 24px rgba(255, 23, 68, 0.2); }
+}
+
+/* Header */
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-tertiary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.match-meta {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.match-group {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.match-matchday {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.live-dot-sm {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--color-live);
+  border-radius: 50%;
+  animation: pulse-live 1.5s ease-in-out infinite;
+  margin-right: 2px;
+}
+
+/* Body - Teams */
+.match-body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: var(--space-lg) var(--space-md);
+  gap: var(--space-md);
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.team-home {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.team-away {
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+  text-align: left;
+}
+
+.team-flag {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.team-flag-svg {
+  flex-shrink: 0;
+}
+
+.team-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Score Area */
+.match-score-area {
+  text-align: center;
+  min-width: 80px;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.score-num {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  min-width: 28px;
+  text-align: center;
+}
+
+.score-sep {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  color: var(--color-text-muted);
+}
+
+.match-time-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.time-big {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.time-date {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+/* Venue */
+.match-venue {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 var(--space-md) var(--space-sm);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  justify-content: center;
+}
+
+/* Prediction */
+.match-prediction {
+  padding: var(--space-md);
+  border-top: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.prediction-form {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.prediction-inputs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.goal-input {
+  width: 48px;
+  height: 40px;
+  text-align: center;
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all var(--transition-fast);
+}
+
+.goal-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-glow);
+}
+
+/* Hide spinners */
+.goal-input::-webkit-outer-spin-button,
+.goal-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.goal-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.input-sep {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+}
+
+/* Prediction Display */
+.prediction-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.prediction-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prediction-values {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.pred-val {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  background: var(--color-accent-subtle);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  min-width: 32px;
+  text-align: center;
+}
+
+.pred-sep {
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}
+
+.prediction-result {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.prediction-result.exact {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.prediction-result.correct {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.prediction-result.wrong {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.result-pts {
+  font-family: var(--font-mono);
+}
+
+/* Locked */
+.prediction-locked {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+/* Feedback */
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  margin-top: var(--space-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+}
+
+.feedback.success {
+  color: var(--color-success);
+  background: var(--color-success-bg);
+}
+
+.feedback.error {
+  color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .team-name {
+    font-size: 0.78rem;
+    max-width: 80px;
+  }
+
+  .team-flag {
+    font-size: 1.5rem;
+  }
+
+  .score-num {
+    font-size: 1.4rem;
+  }
+}
