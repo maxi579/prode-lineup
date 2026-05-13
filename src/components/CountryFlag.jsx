@@ -1,19 +1,23 @@
-import * as Flags3x2 from 'country-flag-icons/react/3x2';
-
-// Map team names to ISO 3166-1 alpha-2 country codes
+// Mapa de equipos a códigos ISO
 const TEAM_CODE_MAP = {
-  'México': 'MX', 'Sudáfrica': 'ZA', 'Corea del Sur': 'KR', 'Chequia': 'CZ',
-  'Canadá': 'CA', 'Bosnia y Herzegovina': 'BA', 'Qatar': 'QA', 'Suiza': 'CH',
-  'Brasil': 'BR', 'Marruecos': 'MA', 'Haití': 'HT', 'Escocia': 'GB',
-  'Estados Unidos': 'US', 'Paraguay': 'PY', 'Australia': 'AU', 'Turquía': 'TR',
-  'Alemania': 'DE', 'Curazao': 'CW', 'Costa de Marfil': 'CI', 'Ecuador': 'EC',
-  'Países Bajos': 'NL', 'Japón': 'JP', 'Suecia': 'SE', 'Túnez': 'TN',
-  'Bélgica': 'BE', 'Egipto': 'EG', 'Irán': 'IR', 'Nueva Zelanda': 'NZ',
-  'España': 'ES', 'Cabo Verde': 'CV', 'Arabia Saudita': 'SA', 'Uruguay': 'UY',
-  'Francia': 'FR', 'Senegal': 'SN', 'Irak': 'IQ', 'Noruega': 'NO',
-  'Argentina': 'AR', 'Argelia': 'DZ', 'Austria': 'AT', 'Jordania': 'JO',
-  'Portugal': 'PT', 'R.D. Congo': 'CD', 'Uzbekistán': 'UZ', 'Colombia': 'CO',
-  'Inglaterra': 'GB', 'Croacia': 'HR', 'Ghana': 'GH', 'Panamá': 'PA',
+  'México': 'mx', 'Sudáfrica': 'za', 'Corea del Sur': 'kr', 'Chequia': 'cz',
+  'Canadá': 'ca', 'Bosnia y Herzegovina': 'ba', 'Qatar': 'qa', 'Suiza': 'ch',
+  'Brasil': 'br', 'Marruecos': 'ma', 'Haití': 'ht',
+  'Estados Unidos': 'us', 'Paraguay': 'py', 'Australia': 'au', 'Turquía': 'tr',
+  'Alemania': 'de', 'Curazao': 'cw', 'Costa de Marfil': 'ci', 'Ecuador': 'ec',
+  'Países Bajos': 'nl', 'Japón': 'jp', 'Suecia': 'se', 'Túnez': 'tn',
+  'Bélgica': 'be', 'Egipto': 'eg', 'Irán': 'ir', 'Nueva Zelanda': 'nz',
+  'España': 'es', 'Cabo Verde': 'cv', 'Arabia Saudita': 'sa', 'Uruguay': 'uy',
+  'Francia': 'fr', 'Senegal': 'sn', 'Irak': 'iq', 'Noruega': 'no',
+  'Argentina': 'ar', 'Argelia': 'dz', 'Austria': 'at', 'Jordania': 'jo',
+  'Portugal': 'pt', 'R.D. Congo': 'cd', 'Uzbekistán': 'uz', 'Colombia': 'co',
+  'Croacia': 'hr', 'Ghana': 'gh', 'Panamá': 'pa',
+};
+
+// Banderas especiales que no tienen código ISO estándar
+const SPECIAL_FLAGS = {
+  'Escocia': 'https://flagcdn.com/w40/gb-sct.png',
+  'Inglaterra': 'https://flagcdn.com/w40/gb-eng.png',
 };
 
 export function getCountryCode(teamName) {
@@ -21,29 +25,42 @@ export function getCountryCode(teamName) {
 }
 
 export default function CountryFlag({ teamName, size = 24, className = '' }) {
-  const code = TEAM_CODE_MAP[teamName];
-  if (!code) {
-    return <span className={className} style={{ fontSize: size * 0.8, lineHeight: 1 }}>🏳️</span>;
+  const width = size;
+  const height = Math.round(size * 2 / 3);
+  const style = {
+    width,
+    height,
+    borderRadius: 3,
+    objectFit: 'cover',
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+  };
+
+  // Banderas especiales (Escocia, Inglaterra)
+  if (SPECIAL_FLAGS[teamName]) {
+    return (
+      <img
+        src={SPECIAL_FLAGS[teamName]}
+        alt={teamName}
+        className={className}
+        style={style}
+      />
+    );
   }
 
-  const FlagComponent = Flags3x2[code];
-  if (!FlagComponent) {
-    return <span className={className} style={{ fontSize: size * 0.8, lineHeight: 1 }}>🏳️</span>;
+  // Resto de países via flagcdn
+  const code = TEAM_CODE_MAP[teamName];
+  if (!code) {
+    return <span style={{ fontSize: size * 0.8 }}>🏳️</span>;
   }
 
   return (
-    <FlagComponent
-      title={teamName}
+    <img
+      src={`https://flagcdn.com/w40/${code}.png`}
+      alt={teamName}
       className={className}
-      style={{
-        width: size,
-        height: Math.round(size * 2 / 3),
-        borderRadius: 3,
-        objectFit: 'cover',
-        display: 'inline-block',
-        verticalAlign: 'middle',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
-      }}
+      style={style}
     />
   );
 }
