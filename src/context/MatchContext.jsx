@@ -1,121 +1,94 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
+import { useAuth } from './AuthContext';
 import fixturesData from '../data/fixtures.json';
 
 const MatchContext = createContext(null);
 
-// ── Demo data: simulated results for Matchday 1 of groups A–F ──
-const DEMO_RESULTS = {
-  A1: { homeGoals: 2, awayGoals: 1, updatedAt: '2026-06-11T18:00:00' },
-  A2: { homeGoals: 1, awayGoals: 1, updatedAt: '2026-06-12T03:00:00' },
-  B1: { homeGoals: 3, awayGoals: 0, updatedAt: '2026-06-12T18:00:00' },
-  B2: { homeGoals: 0, awayGoals: 2, updatedAt: '2026-06-13T18:00:00' },
-  C1: { homeGoals: 2, awayGoals: 2, updatedAt: '2026-06-13T21:00:00' },
-  C2: { homeGoals: 0, awayGoals: 1, updatedAt: '2026-06-14T00:00:00' },
-  D1: { homeGoals: 3, awayGoals: 1, updatedAt: '2026-06-13T00:00:00' },
-  D2: { homeGoals: 1, awayGoals: 2, updatedAt: '2026-06-13T03:00:00' },
-  E1: { homeGoals: 4, awayGoals: 0, updatedAt: '2026-06-14T18:00:00' },
-  E2: { homeGoals: 1, awayGoals: 1, updatedAt: '2026-06-14T21:00:00' },
-  F1: { homeGoals: 1, awayGoals: 3, updatedAt: '2026-06-15T00:00:00' },
-  F2: { homeGoals: 2, awayGoals: 0, updatedAt: '2026-06-15T03:00:00' },
-};
-
-// ── Demo predictions for mock users ──
-const buildDemoPredictions = () => {
-  const preds = {};
-  const userPredictions = {
-    // userId 2 - Maxi: mostly good predictions
-    2: { A1: [2,1], A2: [1,0], B1: [2,0], B2: [0,1], C1: [1,1], C2: [0,2], D1: [3,1], D2: [1,1], E1: [3,0], E2: [1,1], F1: [2,2], F2: [1,0] },
-    // userId 3 - Lucía: decent predictions
-    3: { A1: [1,0], A2: [2,2], B1: [3,0], B2: [1,2], C1: [2,2], C2: [1,0], D1: [2,0], D2: [0,1], E1: [4,0], E2: [0,0], F1: [1,1], F2: [2,0] },
-    // userId 4 - Santiago: best predictor
-    4: { A1: [2,1], A2: [1,1], B1: [2,1], B2: [0,2], C1: [2,1], C2: [0,1], D1: [3,1], D2: [1,2], E1: [4,0], E2: [1,1], F1: [1,3], F2: [2,0] },
-    // userId 5 - Valentina: some misses
-    5: { A1: [0,1], A2: [0,0], B1: [1,1], B2: [0,2], C1: [3,1], C2: [1,1], D1: [2,2], D2: [1,2], E1: [2,0], E2: [2,0], F1: [0,1], F2: [2,0] },
-    // userId 1 - Admin: casual predictions
-    1: { A1: [1,1], A2: [2,0], B1: [1,0], B2: [1,1], C1: [2,0], C2: [0,0], D1: [2,1], D2: [0,0], E1: [3,1], E2: [0,1], F1: [2,1], F2: [1,0] },
-  };
-  Object.entries(userPredictions).forEach(([userId, matches]) => {
-    Object.entries(matches).forEach(([matchId, [h, a]]) => {
-      preds[`${userId}_${matchId}`] = {
-        userId: Number(userId),
-        matchId,
-        homeGoals: h,
-        awayGoals: a,
-        timestamp: '2026-06-10T12:00:00',
-      };
-    });
-  });
-  return preds;
-};
-
 export function MatchProvider({ children }) {
+  const { user } = useAuth();
   const [fixtures] = useState(fixturesData);
   const [predictions, setPredictions] = useState({});
   const [results, setResults] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  // Load predictions from localStorage, fall back to demo data
+  // Cargar pronósticos y resultados desde Supabase
   useEffect(() => {
-    const stored = localStorage.getItem('prode_predictions');
-    if (stored) {
-      try {
-        setPredictions(JSON.parse(stored));
-      } catch {
-        localStorage.removeItem('prode_predictions');
-      }
-    } else {
-      const demoPreds = buildDemoPredictions();
-      setPredictions(demoPreds);
-      localStorage.setItem('prode_predictions', JSON.stringify(demoPreds));
-    }
-    const storedResults = localStorage.getItem('prode_results');
-    if (storedResults) {
-      try {
-        setResults(JSON.parse(storedResults));
-      } catch {
-        localStorage.removeItem('prode_results');
-      }
-    } else {
-      setResults(DEMO_RESULTS);
-      localStorage.setItem('prode_results', JSON.stringify(DEMO_RESULTS));
-    }
-  }, []);
+    fetchResults();
+    if (user) fetchPredictions();
+  }, [user]);
 
-  // Save predictions
-  const savePrediction = (userId, matchId, homeGoals, awayGoals) => {
+  const fetchResults = async () => {
+    const { data, error } = await supabase.from('results').select('*');
+    if (error) { console.error('Error cargando resultados:', error); return; }
+
+    // Convertir array a objeto { matchId: { homeGoals, awayGoals } }
+    const resultsMap = {};
+    data.forEach(r => {
+      resultsMap[r.match_id] = { homeGoals: r.home_goals, awayGoals: r.away_goals, updatedAt: r.updated_at };
+    });
+    setResults(resultsMap);
+    setLoading(false);
+  };
+
+  const fetchPredictions = async () => {
+    const { data, error } = await supabase
+      .from('predictions')
+      .select('*');
+
+    if (error) { console.error('Error cargando pronósticos:', error); return; }
+
+    // Convertir array a objeto { userId_matchId: { ... } }
+    const predsMap = {};
+    data.forEach(p => {
+      predsMap[`${p.user_id}_${p.match_id}`] = {
+        userId: p.user_id,
+        matchId: p.match_id,
+        homeGoals: p.home_goals,
+        awayGoals: p.away_goals,
+        timestamp: p.created_at,
+      };
+    });
+    setPredictions(predsMap);
+  };
+
+  // Guardar pronóstico en Supabase
+  const savePrediction = async (userId, matchId, homeGoals, awayGoals) => {
     const match = getAllMatches().find(m => m.id === matchId);
     if (!match) return { success: false, error: 'Partido no encontrado' };
 
-    // Check lock: 15 min before match
+    // Bloqueo 15 min antes del partido
     const matchDate = new Date(match.date);
     const lockTime = new Date(matchDate.getTime() - 15 * 60 * 1000);
-    const now = new Date();
-
-    if (now >= lockTime) {
+    if (new Date() >= lockTime) {
       return { success: false, error: 'Los pronósticos están bloqueados (15 min antes del partido)' };
     }
 
+    const { error } = await supabase.from('predictions').upsert({
+      user_id: userId,
+      match_id: matchId,
+      home_goals: parseInt(homeGoals),
+      away_goals: parseInt(awayGoals),
+    }, { onConflict: 'user_id,match_id' });
+
+    if (error) return { success: false, error: error.message };
+
+    // Actualizar estado local inmediatamente (sin esperar refetch)
     const key = `${userId}_${matchId}`;
-    const updated = {
-      ...predictions,
-      [key]: {
-        userId,
-        matchId,
-        homeGoals: parseInt(homeGoals),
-        awayGoals: parseInt(awayGoals),
-        timestamp: new Date().toISOString(),
-      }
-    };
-    setPredictions(updated);
-    localStorage.setItem('prode_predictions', JSON.stringify(updated));
+    setPredictions(prev => ({
+      ...prev,
+      [key]: { userId, matchId, homeGoals: parseInt(homeGoals), awayGoals: parseInt(awayGoals), timestamp: new Date().toISOString() }
+    }));
+
     return { success: true };
   };
 
-  // Get user prediction for a match
+  // Obtener pronóstico de un usuario para un partido
   const getPrediction = (userId, matchId) => {
     return predictions[`${userId}_${matchId}`] || null;
   };
 
-  // Get all matches across all groups
+  // Obtener todos los partidos ordenados por fecha
   const getAllMatches = () => {
     const matches = [];
     Object.entries(fixtures.groups).forEach(([groupKey, group]) => {
@@ -126,42 +99,30 @@ export function MatchProvider({ children }) {
     return matches.sort((a, b) => new Date(a.date) - new Date(b.date));
   };
 
-  // Calculate score for a prediction
+  // Calcular puntaje de un pronóstico
   const calculateScore = (prediction, actualResult) => {
     if (!prediction || !actualResult) return null;
-    
     const { homeGoals: predHome, awayGoals: predAway } = prediction;
     const { homeGoals: actHome, awayGoals: actAway } = actualResult;
 
-    // Exact result
-    if (predHome === actHome && predAway === actAway) {
-      return 3;
-    }
-
-    // Correct outcome (win/draw/loss)
+    if (predHome === actHome && predAway === actAway) return 3; // Exacto
+    
     const predOutcome = predHome > predAway ? 'home' : predHome < predAway ? 'away' : 'draw';
     const actOutcome = actHome > actAway ? 'home' : actHome < actAway ? 'away' : 'draw';
-
-    if (predOutcome === actOutcome) {
-      return 1;
-    }
+    if (predOutcome === actOutcome) return 1; // Resultado correcto
 
     return 0;
   };
 
-  // Get user total score
+  // Calcular puntaje total de un usuario
   const getUserScore = (userId) => {
-    let total = 0;
-    let exact = 0;
-    let correct = 0;
-    let wrong = 0;
-    let predicted = 0;
+    let total = 0, exact = 0, correct = 0, wrong = 0, predicted = 0;
 
     Object.entries(predictions).forEach(([key, pred]) => {
       if (pred.userId !== userId) return;
       const result = results[pred.matchId];
       if (!result) return;
-      
+
       predicted++;
       const score = calculateScore(pred, result);
       total += score;
@@ -173,21 +134,26 @@ export function MatchProvider({ children }) {
     return { total, exact, correct, wrong, predicted };
   };
 
-  // Set match result (admin function)
-  const setMatchResult = (matchId, homeGoals, awayGoals) => {
-    const updated = {
-      ...results,
-      [matchId]: {
-        homeGoals: parseInt(homeGoals),
-        awayGoals: parseInt(awayGoals),
-        updatedAt: new Date().toISOString()
-      }
-    };
-    setResults(updated);
-    localStorage.setItem('prode_results', JSON.stringify(updated));
+  // Cargar resultado de un partido (solo admin)
+  const setMatchResult = async (matchId, homeGoals, awayGoals) => {
+    const { error } = await supabase.from('results').upsert({
+      match_id: matchId,
+      home_goals: parseInt(homeGoals),
+      away_goals: parseInt(awayGoals),
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'match_id' });
+
+    if (error) return { success: false, error: error.message };
+
+    setResults(prev => ({
+      ...prev,
+      [matchId]: { homeGoals: parseInt(homeGoals), awayGoals: parseInt(awayGoals), updatedAt: new Date().toISOString() }
+    }));
+
+    return { success: true };
   };
 
-  // Check if match is locked
+  // Verificar si un partido está bloqueado
   const isMatchLocked = (matchId) => {
     const match = getAllMatches().find(m => m.id === matchId);
     if (!match) return true;
@@ -196,40 +162,26 @@ export function MatchProvider({ children }) {
     return new Date() >= lockTime;
   };
 
-  // Get leaderboard
-  const getLeaderboard = () => {
-    const usersMap = {};
-    Object.values(predictions).forEach(pred => {
-      if (!usersMap[pred.userId]) {
-        usersMap[pred.userId] = pred.userId;
-      }
-    });
+  // Obtener leaderboard de todos los usuarios
+  const getLeaderboard = async () => {
+    const { data: profiles, error } = await supabase.from('profiles').select('*');
+    if (error) return [];
 
-    // For demo, we create entries from known users
-    const allUserIds = [1, 2, 3, 4, 5, ...Object.keys(usersMap).map(Number)];
-    const uniqueIds = [...new Set(allUserIds)];
-
-    return uniqueIds.map(id => ({
-      userId: id,
-      ...getUserScore(id)
+    return profiles.map(profile => ({
+      userId: profile.id,
+      name: profile.name,
+      avatar: profile.avatar,
+      email: profile.email,
+      ...getUserScore(profile.id)
     })).sort((a, b) => b.total - a.total || b.exact - a.exact);
   };
 
-  // Get matches for a specific date
-  const getMatchesByDate = (date) => {
-    const all = getAllMatches();
-    return all.filter(m => {
-      const matchDate = new Date(m.date).toDateString();
-      return matchDate === new Date(date).toDateString();
-    });
-  };
-
-  // Get match status based on time
+  // Estado del partido
   const getMatchStatus = (match) => {
     const now = new Date();
     const matchDate = new Date(match.date);
     const lockTime = new Date(matchDate.getTime() - 15 * 60 * 1000);
-    const endTime = new Date(matchDate.getTime() + 120 * 60 * 1000); // ~2h after start
+    const endTime = new Date(matchDate.getTime() + 120 * 60 * 1000);
 
     if (results[match.id]) return 'finished';
     if (now >= matchDate && now <= endTime) return 'live';
@@ -242,6 +194,7 @@ export function MatchProvider({ children }) {
       fixtures,
       predictions,
       results,
+      loading,
       savePrediction,
       getPrediction,
       getAllMatches,
@@ -250,7 +203,6 @@ export function MatchProvider({ children }) {
       setMatchResult,
       isMatchLocked,
       getLeaderboard,
-      getMatchesByDate,
       getMatchStatus,
     }}>
       {children}
