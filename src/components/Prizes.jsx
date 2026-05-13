@@ -1,120 +1,101 @@
-import { Gift, Trophy, Coffee, Star, Award, Sparkles } from 'lucide-react';
+import { Trophy, ExternalLink } from 'lucide-react';
 import './Prizes.css';
 
-const PRIZES = [
-  {
-    id: 1,
-    position: '🥇 1er Puesto',
-    title: 'Mes de Coworking GRATIS',
-    description: 'Un mes completo de escritorio dedicado en LineUp Coworking + café ilimitado.',
-    icon: <Trophy size={32} />,
-    tier: 'gold',
-    value: '$75.000',
-  },
-  {
-    id: 2,
-    position: '🥈 2do Puesto',
-    title: 'Pack Premium LineUp',
-    description: '15 días de coworking + remera oficial del mundial + taza personalizada.',
-    icon: <Star size={32} />,
-    tier: 'silver',
-    value: '$45.000',
-  },
-  {
-    id: 3,
-    position: '🥉 3er Puesto',
-    title: 'Semana de Coworking',
-    description: 'Una semana de escritorio flexible + café con medialunas por 5 días.',
-    icon: <Coffee size={32} />,
-    tier: 'bronze',
-    value: '$25.000',
-  },
-  {
-    id: 4,
-    position: '🎯 Mejor Racha',
-    title: 'Cena para Dos',
-    description: 'Para quien logre la mayor racha consecutiva de aciertos exactos.',
-    icon: <Award size={32} />,
-    tier: 'special',
-    value: '$15.000',
-  },
-  {
-    id: 5,
-    position: '⭐ Más Exactos',
-    title: 'Kit de Productos LineUp',
-    description: 'Remera, gorra, taza y stickers exclusivos de LineUp Coworking.',
-    icon: <Sparkles size={32} />,
-    tier: 'special',
-    value: '$10.000',
-  },
-];
+const ADIDAS_URL = 'https://www.adidas.com.ar/camiseta-titular-seleccion-argentina-26-version-jugador/JM5897.html';
+
+const linkStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '8px',
+  padding: '12px 24px',
+  background: 'linear-gradient(135deg, #FFD24C, #FFA726)',
+  color: '#1a1a2e',
+  borderRadius: '8px',
+  fontWeight: 700,
+  fontSize: '0.95rem',
+  textDecoration: 'none',
+  marginBottom: '24px',
+};
 
 export default function Prizes() {
   return (
     <div className="prizes-page">
+
       {/* Hero */}
       <div className="prizes-hero">
-        <div className="hero-bg-pattern"></div>
-        <div className="hero-content">
-          <div className="hero-icon prize-icon">
-            <Gift size={32} />
+        <div className="section-tag">🏆 Premio</div>
+        <h1 className="section-title">El Premio del Campeón</h1>
+        <p className="section-subtitle">
+          El jugador con más puntos al final del Mundial se lleva la camiseta oficial de Argentina.
+        </p>
+      </div>
+
+      {/* Premio único */}
+      <div className="container" style={{ maxWidth: '500px', margin: '0 auto 64px' }}>
+        <div className="prize-card gold" style={{ padding: '40px' }}>
+          <div className="prize-tier-label" style={{ color: '#FFD24C' }}>
+            🥇 1er Puesto — Ganador Total
           </div>
-          <h1 className="hero-title">PREMIOS</h1>
-          <p className="hero-subtitle">Demostrá tu conocimiento futbolero y llevate los premios del coworking</p>
+
+          <div className="prize-icon-wrap" style={{ width: '80px', height: '80px', margin: '0 auto 24px' }}>
+            <Trophy size={40} />
+          </div>
+
+          <h2 className="prize-title" style={{ fontSize: '1.4rem', marginBottom: '8px' }}>
+            Camiseta Oficial Argentina
+          </h2>
+          <p className="prize-desc">
+            Camiseta titular de la Selección Argentina · Mundial 2026 · Versión Jugador · Oficial Adidas.
+          </p>
+
+          <a href={ADIDAS_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>
+            <ExternalLink size={16} />
+            Ver en Adidas
+          </a>
+
+          <div className="prize-value">
+            <span className="value-label">Premio oficial</span>
+            <span className="value-amount">Camiseta Argentina 2026</span>
+          </div>
         </div>
       </div>
 
-      {/* Prize Cards */}
-      <div className="prizes-grid container">
-        {PRIZES.map((prize, index) => (
-          <div key={prize.id} className={`prize-card ${prize.tier} stagger-item`}>
-            <div className="prize-tier-label">{prize.position}</div>
-            <div className="prize-icon-wrap">
-              {prize.icon}
-            </div>
-            <h3 className="prize-title">{prize.title}</h3>
-            <p className="prize-desc">{prize.description}</p>
-            <div className="prize-value">
-              <span className="value-label">Valor estimado</span>
-              <span className="value-amount">{prize.value}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Rules */}
+      {/* Reglas */}
       <div className="prizes-rules container">
-        <h3 className="rules-title">📋 Reglas del Prode</h3>
+        <h3 className="rules-title">¿Cómo se gana?</h3>
         <div className="rules-grid">
           <div className="rule-card">
-            <div className="rule-number">01</div>
+            <span className="rule-number">01</span>
             <div className="rule-text">
-              <strong>Resultado Exacto = 3 pts.</strong>
-              Acertás los goles de ambos equipos.
+              <strong>Acerto Exacto → 3 puntos</strong>
+              Adivinás el marcador exacto del partido.
             </div>
           </div>
           <div className="rule-card">
-            <div className="rule-number">02</div>
+            <span className="rule-number">02</span>
             <div className="rule-text">
-              <strong>Ganador / Empate = 1 pt.</strong>
-              Acertás quién gana o si empatan, sin el resultado exacto.
+              <strong>Resultado Correcto → 1 punto</strong>
+              Adivinás quién gana o si es empate, pero no el marcador exacto.
             </div>
           </div>
           <div className="rule-card">
-            <div className="rule-number">03</div>
+            <span className="rule-number">03</span>
             <div className="rule-text">
-              <strong>Bloqueo automático.</strong>
-              Los pronósticos se bloquean 15 min antes de cada partido.
+              <strong>Cierre automático</strong>
+              Los pronósticos se bloquean 15 minutos antes de cada partido.
             </div>
           </div>
           <div className="rule-card">
-            <div className="rule-number">04</div>
+            <span className="rule-number">04</span>
             <div className="rule-text">
-              <strong>Los premios son sólo para miembros activos de LineUp Coworking.</strong>
+              <strong>Ganador</strong>
+              El jugador con más puntos al finalizar todos los partidos del Mundial se lleva la camiseta.
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 }
