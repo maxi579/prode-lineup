@@ -1,66 +1,68 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { MessageSquare, Send, Smile, TrendingUp, Flame } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { MessageSquare, Send, Flame } from 'lucide-react';
 import './Wall.css';
-
-// Generate demo timestamps relative to now for natural display
-const now = Date.now();
-const mins = (m) => new Date(now - m * 60000).toISOString();
-
-// Demo messages for initial state
-const DEMO_MESSAGES = [
-  { id: 1, userId: 4, userName: 'Santiago', avatar: '🔥', text: 'Argentina pasa primero seguro 🇦🇷💪', timestamp: mins(280) },
-  { id: 2, userId: 3, userName: 'Lucía', avatar: '🌟', text: 'Brasil - Marruecos va a ser un partidazo en el grupo C', timestamp: mins(210) },
-  { id: 3, userId: 2, userName: 'Maxi', avatar: '⚽', text: 'Le puse 3-1 a USA vs Paraguay, fija que Pulisic la rompe', timestamp: mins(140) },
-  { id: 4, userId: 5, userName: 'Valentina', avatar: '💫', text: '¿Alguien le puso empate al Brasil - Marruecos? Yo sí 😏', timestamp: mins(95) },
-  { id: 5, userId: 4, userName: 'Santiago', avatar: '🔥', text: 'Alemania 4-0 a Curazao, demasiado fácil jajaja', timestamp: mins(60) },
-  { id: 6, userId: 2, userName: 'Maxi', avatar: '⚽', text: 'Le emboqué el exacto al México - Sudáfrica 🎯🔥 +3 puntos', timestamp: mins(35) },
-  { id: 7, userId: 3, userName: 'Lucía', avatar: '🌟', text: 'El que le emboque el resultado exacto a USA vs Paraguay gana café gratis en el coworking ☕', timestamp: mins(15) },
-  { id: 8, userId: 1, userName: 'Admin LineUp', avatar: '👑', text: '⚡ Recuerden: los pronósticos se bloquean 15 minutos antes de cada partido. ¡No se duerman!', timestamp: mins(5) },
-];
 
 export default function Wall() {
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem('prode_wall');
-    if (stored) {
-      try {
-        setMessages(JSON.parse(stored));
-      } catch {
-        setMessages(DEMO_MESSAGES);
-        localStorage.setItem('prode_wall', JSON.stringify(DEMO_MESSAGES));
-      }
-    } else {
-      setMessages(DEMO_MESSAGES);
-      localStorage.setItem('prode_wall', JSON.stringify(DEMO_MESSAGES));
-    }
+    fetchMessages();
+
+    // Escuchar mensajes nuevos en tiempo real
+    const channel = supabase
+      .channel('messages')
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'messages'
+      }, (payload) => {
+        setMessages(prev => [...prev, payload.new]);
+      })
+      .subscribe();
+
+    return () => supabase.removeChannel(channel);
   }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSend = (e) => {
+  const fetchMessages = async () => {
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('Error cargando mensajes:', error);
+    } else {
+      setMessages(data || []);
+    }
+    setLoading(false);
+  };
+
+  const handleSend = async (e) => {
     e.preventDefault();
     if (!newMessage.trim() || !user) return;
 
-    const msg = {
-      id: Date.now(),
-      userId: user.id,
-      userName: user.name,
-      avatar: user.avatar,
+    const { error } = await supabase.from('messages').insert({
+      user_id: user.id,
+      user_name: user.name,
+      avatar: user.avatar || '⚽',
       text: newMessage.trim(),
-      timestamp: new Date().toISOString(),
-    };
+    });
 
-    const updated = [...messages, msg];
-    setMessages(updated);
-    localStorage.setItem('prode_wall', JSON.stringify(updated));
-    setNewMessage('');
+    if (error) {
+      console.error('Error enviando mensaje:', error);
+    } else {
+      setNewMessage('');
+    }
   };
 
   const formatTime = (ts) => {
@@ -80,7 +82,6 @@ export default function Wall() {
 
   return (
     <div className="wall-page">
-      {/* Header */}
       <div className="wall-header">
         <div className="container wall-header-inner">
           <div>
@@ -99,29 +100,37 @@ export default function Wall() {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="wall-messages container">
-        <div className="messages-list">
-          {messages.map((msg) => {
-            const isMe = user && msg.userId === user.id;
-            return (
-              <div key={msg.id} className={`message ${isMe ? 'message-mine' : ''}`}>
-                <div className="message-avatar">{msg.avatar}</div>
-                <div className="message-content">
-                  <div className="message-header">
-                    <span className="message-name">{msg.userName}</span>
-                    <span className="message-time">{formatTime(msg.timestamp)}</span>
+        {loading ? (
+          <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', padding: '2rem' }}>
+            Cargando mensajes...
+          </p>
+        ) : messages.length === 0 ? (
+          <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', padding: '2rem' }}>
+            Sé el primero en escribir algo ⚽
+          </p>
+        ) : (
+          <div className="messages-list">
+            {messages.map((msg) => {
+              const isMe = user && msg.user_id === user.id;
+              return (
+                <div key={msg.id} className={`message ${isMe ? 'message-mine' : ''}`}>
+                  <div className="message-avatar">{msg.avatar}</div>
+                  <div className="message-content">
+                    <div className="message-header">
+                      <span className="message-name">{msg.user_name}</span>
+                      <span className="message-time">{formatTime(msg.created_at)}</span>
+                    </div>
+                    <div className="message-text">{msg.text}</div>
                   </div>
-                  <div className="message-text">{msg.text}</div>
                 </div>
-              </div>
-            );
-          })}
-          <div ref={messagesEndRef} />
-        </div>
+              );
+            })}
+            <div ref={messagesEndRef} />
+          </div>
+        )}
       </div>
 
-      {/* Input */}
       <div className="wall-input-container">
         <form className="wall-input-form container" onSubmit={handleSend}>
           <input
@@ -140,3 +149,4 @@ export default function Wall() {
     </div>
   );
 }
+
