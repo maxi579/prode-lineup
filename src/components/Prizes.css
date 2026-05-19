@@ -1,0 +1,227 @@
+/* ===== PRIZES ===== */
+.prizes-page {
+  padding-bottom: var(--space-3xl);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.prizes-hero {
+  position: relative;
+  padding: var(--space-3xl) 0 var(--space-2xl);
+  text-align: center;
+  overflow: hidden;
+}
+
+.prize-icon {
+  background: linear-gradient(135deg, #FFD24C, #FFA726) !important;
+}
+
+/* Prize Grid */
+.prizes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+}
+
+.prize-card {
+  position: relative;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  text-align: center;
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.prize-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.prize-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tiers */
+.prize-card.gold {
+  border-color: rgba(255, 210, 76, 0.3);
+  background: linear-gradient(180deg, rgba(255, 210, 76, 0.06) 0%, var(--color-bg-card) 40%);
+}
+
+.prize-card.gold::before {
+  background: var(--gradient-gold);
+}
+
+.prize-card.gold:hover {
+  box-shadow: 0 8px 32px rgba(255, 210, 76, 0.15);
+}
+
+.prize-card.silver {
+  border-color: rgba(192, 192, 192, 0.2);
+  background: linear-gradient(180deg, rgba(192, 192, 192, 0.04) 0%, var(--color-bg-card) 40%);
+}
+
+.prize-card.silver::before {
+  background: linear-gradient(135deg, #E0E0E0, #9E9E9E, #E0E0E0);
+}
+
+.prize-card.bronze {
+  border-color: rgba(205, 127, 50, 0.2);
+  background: linear-gradient(180deg, rgba(205, 127, 50, 0.04) 0%, var(--color-bg-card) 40%);
+}
+
+.prize-card.bronze::before {
+  background: linear-gradient(135deg, #CD7F32, #A0522D, #CD7F32);
+}
+
+.prize-card.special {
+  border-color: rgba(66, 165, 245, 0.2);
+  background: linear-gradient(180deg, rgba(66, 165, 245, 0.04) 0%, var(--color-bg-card) 40%);
+}
+
+.prize-card.special::before {
+  background: linear-gradient(135deg, #42A5F5, #7E57C2, #42A5F5);
+}
+
+.prize-tier-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+}
+
+.prize-icon-wrap {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-lg);
+  color: var(--color-accent);
+}
+
+.prize-card.silver .prize-icon-wrap {
+  color: #C0C0C0;
+}
+
+.prize-card.bronze .prize-icon-wrap {
+  color: #CD7F32;
+}
+
+.prize-card.special .prize-icon-wrap {
+  color: #42A5F5;
+}
+
+.prize-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.prize-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-lg);
+}
+
+.prize-value {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-md);
+}
+
+.value-label {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.value-amount {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+/* Rules */
+.prizes-rules {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.rules-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
+}
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.rule-card {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+}
+
+.rule-card:hover {
+  border-color: var(--color-border-hover);
+}
+
+.rule-number {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  opacity: 0.5;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.rule-text {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.rule-text strong {
+  color: var(--color-text-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .prizes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rules-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prizes-grid, .prizes-rules {
+    padding: 0 var(--space-md);
+  }
+}
