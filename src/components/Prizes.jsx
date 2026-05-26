@@ -1,7 +1,7 @@
 import { Trophy, ExternalLink } from 'lucide-react';
 import './Prizes.css';
 
-const ADIDAS_URL = 'https://www.adidas.com.ar/camiseta-titular-seleccion-argentina-26-version-jugador/JM5897.html';
+const ADIDAS_URL = 'https://www.adidas.com.ar/camiseta-titular-de-la-seleccion-argentina-26/JM5900.html';
 
 const linkStyle = {
   display: 'flex',
@@ -46,7 +46,7 @@ export default function Prizes() {
             Camiseta Oficial Argentina
           </h2>
           <p className="prize-desc">
-            Camiseta titular de la Selección Argentina · Mundial 2026 · Versión Jugador · Oficial Adidas.
+            Camiseta titular de la Selección Argentina · Mundial 2026 · Versión Hincha · Oficial Adidas.
           </p>
 
           <a href={ADIDAS_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>
