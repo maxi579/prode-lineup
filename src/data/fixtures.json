@@ -196,8 +196,8 @@
         {
           "id": "C3",
           "matchday": 2,
-          "date": "2026-06-19T16:00:00-03:00",
-          "stadium": "MetLife Stadium, New Jersey",
+          "date": "2026-06-19T21:30:00-03:00",
+          "stadium": "Lincoln Financial Field, Philadelphia",
           "home": "Brasil",
           "away": "Haití",
           "homeFlag": "🇧🇷",
@@ -274,8 +274,8 @@
         {
           "id": "D3",
           "matchday": 2,
-          "date": "2026-06-19T22:00:00-03:00",
-          "stadium": "Lincoln Financial Field, Philadelphia",
+          "date": "2026-06-19T16:00:00-03:00",
+          "stadium": "Lumen Field, Seattle",
           "home": "Estados Unidos",
           "away": "Australia",
           "homeFlag": "🇺🇸",
@@ -286,8 +286,8 @@
         {
           "id": "D4",
           "matchday": 2,
-          "date": "2026-06-19T22:00:00-03:00",
-          "stadium": "NRG Stadium, Houston",
+          "date": "2026-06-20T00:00:00-03:00",
+          "stadium": "Levi's Stadium, San Francisco",
           "home": "Paraguay",
           "away": "Turquía",
           "homeFlag": "🇵🇾",
@@ -352,8 +352,8 @@
         {
           "id": "E3",
           "matchday": 2,
-          "date": "2026-06-20T16:00:00-03:00",
-          "stadium": "AT&T Stadium, Dallas",
+          "date": "2026-06-20T17:00:00-03:00",
+          "stadium": "BMO Field, Toronto",
           "home": "Alemania",
           "away": "Costa de Marfil",
           "homeFlag": "🇩🇪",
@@ -364,7 +364,7 @@
         {
           "id": "E4",
           "matchday": 2,
-          "date": "2026-06-20T19:00:00-03:00",
+          "date": "2026-06-20T21:00:00-03:00",
           "stadium": "Hard Rock Stadium, Miami",
           "home": "Ecuador",
           "away": "Curazao",
@@ -430,8 +430,8 @@
         {
           "id": "F3",
           "matchday": 2,
-          "date": "2026-06-20T22:00:00-03:00",
-          "stadium": "AT&T Stadium, Dallas",
+          "date": "2026-06-20T14:00:00-03:00",
+          "stadium": "NRG Stadium, Houston",
           "home": "Países Bajos",
           "away": "Suecia",
           "homeFlag": "🇳🇱",
