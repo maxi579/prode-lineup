@@ -41,14 +41,15 @@ export default function MatchCard({ match, userId }) {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userId) return;
     if (homeGoals === '' || awayGoals === '') {
       setFeedback({ type: 'error', msg: 'Completá ambos goles' });
       return;
     }
-    const res = savePrediction(userId, match.id, homeGoals, awayGoals);
+    setFeedback({ type: 'loading', msg: 'Guardando...' });
+    const res = await savePrediction(userId, match.id, homeGoals, awayGoals);
     if (res.success) {
       setFeedback({ type: 'success', msg: '¡Pronóstico guardado!' });
       setTimeout(() => setFeedback(null), 2000);
