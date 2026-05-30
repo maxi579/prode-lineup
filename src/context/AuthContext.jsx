@@ -8,20 +8,32 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Verificar si hay sesión activa al cargar la app
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const handleAuthCallback = async () => {
+      const hash = window.location.hash;
+      
+      if (hash && hash.includes('access_token')) {
+        const { data } = await supabase.auth.getSession();
+        if (data?.session?.user) {
+          await fetchProfile(data.session.user.id);
+          window.history.replaceState(null, '', window.location.pathname);
+          return;
+        }
+      }
+
+      const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        fetchProfile(session.user.id);
+        await fetchProfile(session.user.id);
       } else {
         setLoading(false);
       }
-    });
+    };
 
-    // Escuchar cambios de sesión (login, logout, Google callback)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        fetchProfile(session.user.id);
-      } else {
+    handleAuthCallback();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        await fetchProfile(session.user.id);
+      } else if (event === 'SIGNED_OUT') {
         setUser(null);
         setLoading(false);
       }
@@ -30,32 +42,47 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Traer el perfil del usuario desde la base de datos
   const fetchProfile = async (userId) => {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
 
-    if (error) {
-      console.error('Error al traer perfil:', error);
+      if (error) {
+        if (error.code === 'PGRST116') {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          const { data: retryData } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .single();
+          if (retryData) {
+            setUser(retryData);
+            setLoading(false);
+            return;
+          }
+        }
+        console.error('Error al traer perfil:', error);
+        setLoading(false);
+        return;
+      }
+
+      setUser(data);
       setLoading(false);
-      return;
+    } catch (err) {
+      console.error('Error inesperado:', err);
+      setLoading(false);
     }
-
-    setUser(data);
-    setLoading(false);
   };
 
-  // Login con email y contraseña
   const login = async (email, password) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return { success: false, error: 'Email o contraseña incorrectos' };
     return { success: true };
   };
 
-  // Registro con email y contraseña
   const register = async (name, email, password) => {
     if (!name.trim()) return { success: false, error: 'Ingresá tu nombre' };
     if (!email.includes('@')) return { success: false, error: 'Ingresá un email válido' };
@@ -63,9 +90,7 @@ export function AuthProvider({ children }) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: { full_name: name } // El trigger de Supabase usa esto para crear el perfil
-      }
+      options: { data: { full_name: name } }
     });
 
     if (error) return { success: false, error: error.message };
@@ -75,19 +100,15 @@ export function AuthProvider({ children }) {
     return { success: true };
   };
 
-  // Login con Google - abre el popup de Google
   const loginWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: window.location.origin + '/dashboard'
-      }
+      options: { redirectTo: window.location.origin + '/dashboard' }
     });
     if (error) return { success: false, error: error.message };
     return { success: true };
   };
 
-  // Cerrar sesión
   const logout = async () => {
     await supabase.auth.signOut();
     setUser(null);
