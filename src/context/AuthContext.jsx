@@ -32,20 +32,34 @@ export function AuthProvider({ children }) {
 
   // Traer el perfil del usuario desde la base de datos
   const fetchProfile = async (userId) => {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
+    try {
+      let { data } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
 
-    if (error) {
-      console.error('Error al traer perfil:', error);
+      if (!data) {
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        const name = authUser?.user_metadata?.full_name ||
+                     authUser?.user_metadata?.name ||
+                     authUser?.email?.split('@')[0] || 'Usuario';
+
+        const { data: newProfile } = await supabase
+          .from('profiles')
+          .insert({ id: userId, name, email: authUser.email, avatar: '⚽' })
+          .select()
+          .single();
+
+        data = newProfile;
+      }
+
+      if (data) setUser(data);
       setLoading(false);
-      return;
+    } catch (err) {
+      console.error('Error:', err);
+      setLoading(false);
     }
-
-    setUser(data);
-    setLoading(false);
   };
 
   // Login con email y contraseña
@@ -80,7 +94,7 @@ export function AuthProvider({ children }) {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin + '/dashboard'
+        redirectTo: window.location.origin
       }
     });
     if (error) return { success: false, error: error.message };
