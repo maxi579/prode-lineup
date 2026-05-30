@@ -42,39 +42,34 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const fetchProfile = async (userId) => {
-    try {
+  const fetchProfile = async (userId, retries = 5) => {
+    for (let i = 0; i < retries; i++) {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single();
 
-      if (error) {
-        if (error.code === 'PGRST116') {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          const { data: retryData } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', userId)
-            .single();
-          if (retryData) {
-            setUser(retryData);
-            setLoading(false);
-            return;
-          }
-        }
+      if (data) {
+        setUser(data);
+        setLoading(false);
+        return;
+      }
+
+      if (error && error.code !== 'PGRST116') {
         console.error('Error al traer perfil:', error);
         setLoading(false);
         return;
       }
 
-      setUser(data);
-      setLoading(false);
-    } catch (err) {
-      console.error('Error inesperado:', err);
-      setLoading(false);
+      // Perfil no existe aún, esperar y reintentar
+      await new Promise(resolve => setTimeout(resolve, 800));
     }
+
+    // Si después de todos los intentos no hay perfil, cerrar sesión
+    console.error('No se pudo crear el perfil');
+    await supabase.auth.signOut();
+    setLoading(false);
   };
 
   const login = async (email, password) => {
