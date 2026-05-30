@@ -42,34 +42,35 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const fetchProfile = async (userId, retries = 5) => {
-    for (let i = 0; i < retries; i++) {
-      const { data, error } = await supabase
+  const fetchProfile = async (userId) => {
+    try {
+      let { data } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single();
 
-      if (data) {
-        setUser(data);
-        setLoading(false);
-        return;
+      if (!data) {
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        const name = authUser?.user_metadata?.full_name ||
+                     authUser?.user_metadata?.name ||
+                     authUser?.email?.split('@')[0] || 'Usuario';
+
+        const { data: newProfile } = await supabase
+          .from('profiles')
+          .insert({ id: userId, name, email: authUser.email, avatar: '⚽' })
+          .select()
+          .single();
+
+        data = newProfile;
       }
 
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error al traer perfil:', error);
-        setLoading(false);
-        return;
-      }
-
-      // Perfil no existe aún, esperar y reintentar
-      await new Promise(resolve => setTimeout(resolve, 800));
+      if (data) setUser(data);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error:', err);
+      setLoading(false);
     }
-
-    // Si después de todos los intentos no hay perfil, cerrar sesión
-    console.error('No se pudo crear el perfil');
-    await supabase.auth.signOut();
-    setLoading(false);
   };
 
   const login = async (email, password) => {
