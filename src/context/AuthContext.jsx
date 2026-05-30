@@ -8,9 +8,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    // Verificar si hay sesión activa al cargar la app
+    supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
-        await fetchProfile(session.user.id);
+        fetchProfile(session.user.id);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    // Escuchar cambios de sesión (login, logout, Google callback)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        fetchProfile(session.user.id);
       } else {
         setUser(null);
         setLoading(false);
@@ -20,43 +30,32 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Traer el perfil del usuario desde la base de datos
   const fetchProfile = async (userId) => {
-    try {
-      let { data } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
 
-      if (!data) {
-        const { data: { user: authUser } } = await supabase.auth.getUser();
-        const name = authUser?.user_metadata?.full_name ||
-                     authUser?.user_metadata?.name ||
-                     authUser?.email?.split('@')[0] || 'Usuario';
-
-        const { data: newProfile } = await supabase
-          .from('profiles')
-          .insert({ id: userId, name, email: authUser.email, avatar: '⚽' })
-          .select()
-          .single();
-
-        data = newProfile;
-      }
-
-      if (data) setUser(data);
+    if (error) {
+      console.error('Error al traer perfil:', error);
       setLoading(false);
-    } catch (err) {
-      console.error('Error:', err);
-      setLoading(false);
+      return;
     }
+
+    setUser(data);
+    setLoading(false);
   };
 
+  // Login con email y contraseña
   const login = async (email, password) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return { success: false, error: 'Email o contraseña incorrectos' };
     return { success: true };
   };
 
+  // Registro con email y contraseña
   const register = async (name, email, password) => {
     if (!name.trim()) return { success: false, error: 'Ingresá tu nombre' };
     if (!email.includes('@')) return { success: false, error: 'Ingresá un email válido' };
@@ -64,7 +63,9 @@ export function AuthProvider({ children }) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: name } }
+      options: {
+        data: { full_name: name } // El trigger de Supabase usa esto para crear el perfil
+      }
     });
 
     if (error) return { success: false, error: error.message };
@@ -74,19 +75,22 @@ export function AuthProvider({ children }) {
     return { success: true };
   };
 
+  // Login con Google - abre el popup de Google
   const loginWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin + '/dashboard' }
+      options: {
+        redirectTo: window.location.origin + '/dashboard'
+      }
     });
     if (error) return { success: false, error: error.message };
     return { success: true };
   };
 
+  // Cerrar sesión
   const logout = async () => {
     await supabase.auth.signOut();
     setUser(null);
-    setLoading(false);
   };
 
   return (
