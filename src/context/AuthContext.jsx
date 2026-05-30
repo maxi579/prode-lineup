@@ -8,27 +8,13 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const handleAuthCallback = async () => {
-      const hash = window.location.hash;
-      
-      if (hash && hash.includes('access_token')) {
-        const { data } = await supabase.auth.getSession();
-        if (data?.session?.user) {
-          await fetchProfile(data.session.user.id);
-          window.history.replaceState(null, '', window.location.pathname);
-          return;
-        }
-      }
-
-      const { data: { session } } = await supabase.auth.getSession();
+    supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
-        await fetchProfile(session.user.id);
+        fetchProfile(session.user.id);
       } else {
         setLoading(false);
       }
-    };
-
-    handleAuthCallback();
+    });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
@@ -108,6 +94,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setLoading(false);
   };
 
   return (
