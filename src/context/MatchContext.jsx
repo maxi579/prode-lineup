@@ -34,7 +34,8 @@ export function MatchProvider({ children }) {
   const fetchPredictions = async () => {
     const { data, error } = await supabase
       .from('predictions')
-      .select('*');
+      .select('*')
+      .limit(10000);
 
     if (error) { console.error('Error cargando pronósticos:', error); return; }
 
