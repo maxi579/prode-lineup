@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // ← CAMBIO 1: agregamos useEffect
 import { useMatches } from '../context/MatchContext';
 import { Lock, Clock, MapPin, Check, AlertCircle } from 'lucide-react';
 import CountryFlag from './CountryFlag';
 import './MatchCard.css';
 
 export default function MatchCard({ match, userId }) {
-  const { getPrediction, savePrediction, getMatchStatus, results } = useMatches();
+  const { getPrediction, savePrediction, getMatchStatus, results, predictions } = useMatches(); // ← CAMBIO 2: agregamos predictions
   const [homeGoals, setHomeGoals] = useState('');
   const [awayGoals, setAwayGoals] = useState('');
   const [feedback, setFeedback] = useState(null);
@@ -13,6 +13,14 @@ export default function MatchCard({ match, userId }) {
   const status = getMatchStatus(match);
   const prediction = userId ? getPrediction(userId, match.id) : null;
   const result = results[match.id];
+
+  // ← CAMBIO 3: sincronizar inputs cuando llegan datos del contexto
+  useEffect(() => {
+    if (prediction) {
+      setHomeGoals(String(prediction.homeGoals));
+      setAwayGoals(String(prediction.awayGoals));
+    }
+  }, [predictions, match.id, userId]);
 
   const matchTime = new Date(match.date).toLocaleTimeString('es-AR', {
     hour: '2-digit',
