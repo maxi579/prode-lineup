@@ -12,7 +12,6 @@ export function MatchProvider({ children }) {
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // Cargar pronósticos y resultados desde Supabase
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -42,6 +41,11 @@ export function MatchProvider({ children }) {
 
     if (error) { console.error('Error cargando pronósticos:', error); return; }
 
+    console.log('TOTAL PREDICTIONS:', data.length);
+    console.log('MI USER ID:', user?.id);
+    console.log('C1 MATCH:', data.find(p => p.match_id === 'C1'));
+    console.log('ALL KEYS:', data.map(p => `${p.user_id}_${p.match_id}`));
+
     const predsMap = {};
     data.forEach(p => {
       predsMap[`${p.user_id}_${p.match_id}`] = {
@@ -52,6 +56,11 @@ export function MatchProvider({ children }) {
         timestamp: p.created_at,
       };
     });
+
+    console.log('PREDS MAP KEYS:', Object.keys(predsMap));
+    console.log('LOOKING FOR:', `${user?.id}_C1`);
+    console.log('FOUND C1 IN MAP?', predsMap[`${user?.id}_C1`]);
+
     setPredictions(predsMap);
   };
 
@@ -103,7 +112,7 @@ export function MatchProvider({ children }) {
     const { homeGoals: actHome, awayGoals: actAway } = actualResult;
 
     if (predHome === actHome && predAway === actAway) return 3;
-    
+
     const predOutcome = predHome > predAway ? 'home' : predHome < predAway ? 'away' : 'draw';
     const actOutcome = actHome > actAway ? 'home' : actHome < actAway ? 'away' : 'draw';
     if (predOutcome === actOutcome) return 1;
