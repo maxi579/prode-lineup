@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'; // ← CAMBIO 1: agregamos useEffect
+import { useState, useEffect } from 'react';
 import { useMatches } from '../context/MatchContext';
 import { Lock, Clock, MapPin, Check, AlertCircle } from 'lucide-react';
 import CountryFlag from './CountryFlag';
 import './MatchCard.css';
 
 export default function MatchCard({ match, userId }) {
-  const { getPrediction, savePrediction, getMatchStatus, results, predictions } = useMatches(); // ← CAMBIO 2: agregamos predictions
+  const { getPrediction, savePrediction, getMatchStatus, results, predictions } = useMatches();
   const [homeGoals, setHomeGoals] = useState('');
   const [awayGoals, setAwayGoals] = useState('');
   const [feedback, setFeedback] = useState(null);
@@ -14,7 +14,6 @@ export default function MatchCard({ match, userId }) {
   const prediction = userId ? getPrediction(userId, match.id) : null;
   const result = results[match.id];
 
-  // ← CAMBIO 3: sincronizar inputs cuando llegan datos del contexto
   useEffect(() => {
     if (prediction) {
       setHomeGoals(String(prediction.homeGoals));
@@ -33,7 +32,6 @@ export default function MatchCard({ match, userId }) {
     month: '2-digit',
   });
 
-  // Calculate score if both prediction and result exist
   let scoreResult = null;
   if (prediction && result) {
     if (prediction.homeGoals === result.homeGoals && prediction.awayGoals === result.awayGoals) {
@@ -81,7 +79,6 @@ export default function MatchCard({ match, userId }) {
 
   return (
     <div className={`match-card ${status === 'live' ? 'match-live' : ''} ${status === 'finished' ? 'match-finished' : ''}`}>
-      {/* Card Header */}
       <div className="match-header">
         <div className="match-meta">
           <span className="match-group">Grupo {match.group}</span>
@@ -90,7 +87,6 @@ export default function MatchCard({ match, userId }) {
         {statusBadge()}
       </div>
 
-      {/* Teams & Score */}
       <div className="match-body">
         <div className="team team-home">
           <CountryFlag teamName={match.home} size={32} className="team-flag-svg" />
@@ -118,15 +114,14 @@ export default function MatchCard({ match, userId }) {
         </div>
       </div>
 
-      {/* Stadium */}
       <div className="match-venue">
         <MapPin size={12} />
         <span>{match.stadium}</span>
       </div>
 
-      {/* Prediction Section */}
       <div className="match-prediction">
-        {prediction ? (
+        {/* ← FIX: prediction y form son independientes, ya no se excluyen */}
+        {prediction && (
           <div className="prediction-display">
             <div className="prediction-label">Tu pronóstico</div>
             <div className="prediction-values">
@@ -141,7 +136,9 @@ export default function MatchCard({ match, userId }) {
               </div>
             )}
           </div>
-        ) : status === 'open' ? (
+        )}
+
+        {!prediction && status === 'open' && (
           <form className="prediction-form" onSubmit={handleSubmit}>
             <div className="prediction-inputs">
               <input
@@ -169,7 +166,9 @@ export default function MatchCard({ match, userId }) {
               Guardar
             </button>
           </form>
-        ) : (
+        )}
+
+        {!prediction && status !== 'open' && (
           <div className="prediction-locked">
             <Lock size={14} />
             <span>Sin pronóstico</span>
