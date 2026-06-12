@@ -33,21 +33,31 @@ export function MatchProvider({ children }) {
     setResults(resultsMap);
   };
 
+  // Trae TODOS los pronósticos paginando de 1000 en 1000
+  // (Supabase tiene un límite máximo de 1000 filas por consulta,
+  // .limit(10000) no lo supera)
   const fetchPredictions = async () => {
-    const { data, error } = await supabase
-      .from('predictions')
-      .select('*')
-      .limit(10000);
+    let allData = [];
+    let from = 0;
+    const pageSize = 1000;
 
-    if (error) { console.error('Error cargando pronósticos:', error); return; }
+    while (true) {
+      const { data, error } = await supabase
+        .from('predictions')
+        .select('*')
+        .range(from, from + pageSize - 1);
 
-    console.log('TOTAL PREDICTIONS:', data.length);
-    console.log('MI USER ID:', user?.id);
-    console.log('C1 MATCH:', data.find(p => p.match_id === 'C1'));
-    console.log('ALL KEYS:', data.map(p => `${p.user_id}_${p.match_id}`));
+      if (error) { console.error('Error cargando pronósticos:', error); return; }
+      if (!data || data.length === 0) break;
+
+      allData = [...allData, ...data];
+
+      if (data.length < pageSize) break;
+      from += pageSize;
+    }
 
     const predsMap = {};
-    data.forEach(p => {
+    allData.forEach(p => {
       predsMap[`${p.user_id}_${p.match_id}`] = {
         userId: p.user_id,
         matchId: p.match_id,
@@ -56,11 +66,6 @@ export function MatchProvider({ children }) {
         timestamp: p.created_at,
       };
     });
-
-    console.log('PREDS MAP KEYS:', Object.keys(predsMap));
-    console.log('LOOKING FOR:', `${user?.id}_C1`);
-    console.log('FOUND C1 IN MAP?', predsMap[`${user?.id}_C1`]);
-
     setPredictions(predsMap);
   };
 
@@ -165,11 +170,28 @@ export function MatchProvider({ children }) {
     return new Date() >= lockTime;
   };
 
+  // Trae TODOS los perfiles paginando de 1000 en 1000
   const getLeaderboard = async () => {
-    const { data: profiles, error } = await supabase.from('profiles').select('*');
-    if (error) return [];
+    let allProfiles = [];
+    let from = 0;
+    const pageSize = 1000;
 
-    return profiles.map(profile => ({
+    while (true) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .range(from, from + pageSize - 1);
+
+      if (error) return [];
+      if (!data || data.length === 0) break;
+
+      allProfiles = [...allProfiles, ...data];
+
+      if (data.length < pageSize) break;
+      from += pageSize;
+    }
+
+    return allProfiles.map(profile => ({
       userId: profile.id,
       name: profile.name,
       avatar: profile.avatar,
