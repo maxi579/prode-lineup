@@ -175,7 +175,7 @@ export default function GroupTables() {
             <div className="classification-legend">
               <div className="legend-item">
                 <div className="legend-color qualify"></div>
-                <span>Clasifica a 32avos (1° y 2°)</span>
+                <span>Clasifica a 16avos (1° y 2°)</span>
               </div>
               <div className="legend-item">
                 <div className="legend-color possible"></div>
