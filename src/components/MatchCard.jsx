@@ -57,7 +57,7 @@ export default function MatchCard({ match, userId }) {
     setFeedback({ type: 'loading', msg: 'Guardando...' });
     const res = await savePrediction(userId, match.id, homeGoals, awayGoals);
     if (res.success) {
-      setFeedback({ type: 'success', msg: '¡Pronóstico guardado!' });
+      setFeedback({ type: 'success', msg: prediction ? '¡Pronóstico actualizado!' : '¡Pronóstico guardado!' });
       setTimeout(() => setFeedback(null), 2000);
     } else {
       setFeedback({ type: 'error', msg: res.error });
@@ -122,21 +122,6 @@ export default function MatchCard({ match, userId }) {
       <div className="match-prediction">
         {loading ? (
           <div className="prediction-loading">...</div>
-        ) : prediction ? (
-          <div className="prediction-display">
-            <div className="prediction-label">Tu pronóstico</div>
-            <div className="prediction-values">
-              <span className="pred-val">{prediction.homeGoals}</span>
-              <span className="pred-sep">-</span>
-              <span className="pred-val">{prediction.awayGoals}</span>
-            </div>
-            {scoreResult && (
-              <div className={`prediction-result ${scoreResult.class}`}>
-                <span className="result-label">{scoreResult.label}</span>
-                <span className="result-pts">+{scoreResult.pts} pts</span>
-              </div>
-            )}
-          </div>
         ) : status === 'open' ? (
           <form className="prediction-form" onSubmit={handleSubmit}>
             <div className="prediction-inputs">
@@ -162,9 +147,24 @@ export default function MatchCard({ match, userId }) {
             </div>
             <button type="submit" className="btn btn-primary btn-sm">
               <Check size={14} />
-              Guardar
+              {prediction ? 'Actualizar' : 'Guardar'}
             </button>
           </form>
+        ) : prediction ? (
+          <div className="prediction-display">
+            <div className="prediction-label">Tu pronóstico</div>
+            <div className="prediction-values">
+              <span className="pred-val">{prediction.homeGoals}</span>
+              <span className="pred-sep">-</span>
+              <span className="pred-val">{prediction.awayGoals}</span>
+            </div>
+            {scoreResult && (
+              <div className={`prediction-result ${scoreResult.class}`}>
+                <span className="result-label">{scoreResult.label}</span>
+                <span className="result-pts">+{scoreResult.pts} pts</span>
+              </div>
+            )}
+          </div>
         ) : (
           <div className="prediction-locked">
             <Lock size={14} />
