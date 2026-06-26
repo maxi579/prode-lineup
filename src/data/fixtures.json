@@ -1,6 +1,10 @@
 {
   "tournament": "FIFA World Cup 2026",
-  "hosts": ["USA", "Mexico", "Canada"],
+  "hosts": [
+    "USA",
+    "Mexico",
+    "Canada"
+  ],
   "format": {
     "totalTeams": 48,
     "groups": 12,
@@ -11,7 +15,12 @@
   "groups": {
     "A": {
       "name": "Grupo A",
-      "teams": ["México", "Sudáfrica", "Corea del Sur", "Chequia"],
+      "teams": [
+        "México",
+        "Sudáfrica",
+        "Corea del Sur",
+        "Chequia"
+      ],
       "matches": [
         {
           "id": "A1",
@@ -89,7 +98,12 @@
     },
     "B": {
       "name": "Grupo B",
-      "teams": ["Canadá", "Bosnia y Herzegovina", "Qatar", "Suiza"],
+      "teams": [
+        "Canadá",
+        "Bosnia y Herzegovina",
+        "Qatar",
+        "Suiza"
+      ],
       "matches": [
         {
           "id": "B1",
@@ -167,7 +181,12 @@
     },
     "C": {
       "name": "Grupo C",
-      "teams": ["Brasil", "Marruecos", "Haití", "Escocia"],
+      "teams": [
+        "Brasil",
+        "Marruecos",
+        "Haití",
+        "Escocia"
+      ],
       "matches": [
         {
           "id": "C1",
@@ -245,7 +264,12 @@
     },
     "D": {
       "name": "Grupo D",
-      "teams": ["Estados Unidos", "Paraguay", "Australia", "Turquía"],
+      "teams": [
+        "Estados Unidos",
+        "Paraguay",
+        "Australia",
+        "Turquía"
+      ],
       "matches": [
         {
           "id": "D1",
@@ -323,7 +347,12 @@
     },
     "E": {
       "name": "Grupo E",
-      "teams": ["Alemania", "Curazao", "Costa de Marfil", "Ecuador"],
+      "teams": [
+        "Alemania",
+        "Curazao",
+        "Costa de Marfil",
+        "Ecuador"
+      ],
       "matches": [
         {
           "id": "E1",
@@ -401,7 +430,12 @@
     },
     "F": {
       "name": "Grupo F",
-      "teams": ["Países Bajos", "Japón", "Suecia", "Túnez"],
+      "teams": [
+        "Países Bajos",
+        "Japón",
+        "Suecia",
+        "Túnez"
+      ],
       "matches": [
         {
           "id": "F1",
@@ -479,7 +513,12 @@
     },
     "G": {
       "name": "Grupo G",
-      "teams": ["Bélgica", "Egipto", "Irán", "Nueva Zelanda"],
+      "teams": [
+        "Bélgica",
+        "Egipto",
+        "Irán",
+        "Nueva Zelanda"
+      ],
       "matches": [
         {
           "id": "G1",
@@ -557,7 +596,12 @@
     },
     "H": {
       "name": "Grupo H",
-      "teams": ["España", "Cabo Verde", "Arabia Saudita", "Uruguay"],
+      "teams": [
+        "España",
+        "Cabo Verde",
+        "Arabia Saudita",
+        "Uruguay"
+      ],
       "matches": [
         {
           "id": "H1",
@@ -635,7 +679,12 @@
     },
     "I": {
       "name": "Grupo I",
-      "teams": ["Francia", "Senegal", "Irak", "Noruega"],
+      "teams": [
+        "Francia",
+        "Senegal",
+        "Irak",
+        "Noruega"
+      ],
       "matches": [
         {
           "id": "I1",
@@ -713,7 +762,12 @@
     },
     "J": {
       "name": "Grupo J",
-      "teams": ["Argentina", "Argelia", "Austria", "Jordania"],
+      "teams": [
+        "Argentina",
+        "Argelia",
+        "Austria",
+        "Jordania"
+      ],
       "matches": [
         {
           "id": "J1",
@@ -791,7 +845,12 @@
     },
     "K": {
       "name": "Grupo K",
-      "teams": ["Portugal", "R.D. Congo", "Uzbekistán", "Colombia"],
+      "teams": [
+        "Portugal",
+        "R.D. Congo",
+        "Uzbekistán",
+        "Colombia"
+      ],
       "matches": [
         {
           "id": "K1",
@@ -869,7 +928,12 @@
     },
     "L": {
       "name": "Grupo L",
-      "teams": ["Inglaterra", "Croacia", "Ghana", "Panamá"],
+      "teams": [
+        "Inglaterra",
+        "Croacia",
+        "Ghana",
+        "Panamá"
+      ],
       "matches": [
         {
           "id": "L1",
@@ -940,6 +1004,69 @@
           "away": "Ghana",
           "homeFlag": "🇭🇷",
           "awayFlag": "🇬🇭",
+          "result": null,
+          "status": "scheduled"
+        }
+      ]
+    },
+    "R32": {
+      "name": "16avos de Final",
+      "teams": [
+        "Sudáfrica",
+        "Canadá",
+        "Brasil",
+        "Japón",
+        "Países Bajos",
+        "Marruecos",
+        "Estados Unidos",
+        "Bosnia y Herzegovina"
+      ],
+      "matches": [
+        {
+          "id": "R32-1",
+          "matchday": 4,
+          "date": "2026-06-28T16:00:00-03:00",
+          "stadium": "SoFi Stadium, Los Ángeles",
+          "home": "Sudáfrica",
+          "away": "Canadá",
+          "homeFlag": "🇿🇦",
+          "awayFlag": "🇨🇦",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-2",
+          "matchday": 4,
+          "date": "2026-06-29T14:00:00-03:00",
+          "stadium": "NRG Stadium, Houston",
+          "home": "Brasil",
+          "away": "Japón",
+          "homeFlag": "🇧🇷",
+          "awayFlag": "🇯🇵",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-3",
+          "matchday": 4,
+          "date": "2026-06-29T22:00:00-03:00",
+          "stadium": "Estadio BBVA, Monterrey",
+          "home": "Países Bajos",
+          "away": "Marruecos",
+          "homeFlag": "🇳🇱",
+          "awayFlag": "🇲🇦",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-4",
+          "matchday": 4,
+          "date": "2026-07-01T21:00:00-03:00",
+          "stadium": "Levi's Stadium, San Francisco",
+          "home": "Estados Unidos",
+          "away": "Bosnia y Herzegovina",
+          "homeFlag": "🇺🇸",
+          "awayFlag": "🇧🇦",
           "result": null,
           "status": "scheduled"
         }

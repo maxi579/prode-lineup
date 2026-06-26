@@ -13,6 +13,8 @@ export default function GroupTables() {
     const groupStandings = {};
 
     Object.entries(fixtures.groups).forEach(([groupKey, group]) => {
+      // Saltar rondas eliminatorias (no son grupos reales)
+      if (groupKey === 'R32') return;
       const teamStats = {};
       group.teams.forEach(team => {
         teamStats[team] = {
@@ -245,23 +247,26 @@ export default function GroupTables() {
 
         {activeTab === 'bracket' && (
           <div className="bracket-section">
+            <p className="bracket-scroll-hint">Deslizá horizontalmente para ver todo el cuadro →</p>
             <div className="bracket-container">
               {/* Round of 32 (16avos) */}
-              <div className="bracket-round">
+              <div className="bracket-round has-pairs">
                 <h3 className="round-title">16avos de Final</h3>
                 <div className="bracket-matches">
-                  {bracketData.roundOf32.map((match) => {
+                  {bracketData.roundOf32.map((match, idx) => {
                     const homeResolved = resolvePosition(match.home);
                     const awayResolved = resolvePosition(match.away);
                     return (
-                      <div key={match.id} className="bracket-match">
-                        <div className={`bracket-team ${homeResolved?.isThird ? 'third-place' : ''}`}>
-                          {homeResolved?.teamName && <CountryFlag teamName={homeResolved.teamName} size={16} />}
-                          <span>{homeResolved?.label || 'TBD'}</span>
-                        </div>
-                        <div className={`bracket-team ${awayResolved?.isThird ? 'third-place' : ''}`}>
-                          {awayResolved?.teamName && <CountryFlag teamName={awayResolved.teamName} size={16} />}
-                          <span>{awayResolved?.label || 'TBD'}</span>
+                      <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                        <div className="bracket-match">
+                          <div className={`bracket-team ${homeResolved?.isThird ? 'third-place' : ''}`}>
+                            {homeResolved?.teamName && <CountryFlag teamName={homeResolved.teamName} size={16} />}
+                            <span>{homeResolved?.label || 'TBD'}</span>
+                          </div>
+                          <div className={`bracket-team ${awayResolved?.isThird ? 'third-place' : ''}`}>
+                            {awayResolved?.teamName && <CountryFlag teamName={awayResolved.teamName} size={16} />}
+                            <span>{awayResolved?.label || 'TBD'}</span>
+                          </div>
                         </div>
                       </div>
                     );
@@ -270,16 +275,18 @@ export default function GroupTables() {
               </div>
 
               {/* Round of 16 (Octavos) */}
-              <div className="bracket-round">
+              <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Octavos de Final</h3>
                 <div className="bracket-matches">
-                  {bracketData.roundOf16.map((match) => (
-                    <div key={match.id} className="bracket-match">
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
-                      </div>
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
+                  {bracketData.roundOf16.map((match, idx) => (
+                    <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                      <div className="bracket-match">
+                        <div className="bracket-team tbd">
+                          <span>A confirmar</span>
+                        </div>
+                        <div className="bracket-team tbd">
+                          <span>A confirmar</span>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -287,16 +294,18 @@ export default function GroupTables() {
               </div>
 
               {/* Quarters */}
-              <div className="bracket-round">
+              <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Cuartos de Final</h3>
                 <div className="bracket-matches">
-                  {bracketData.quarters.map((match) => (
-                    <div key={match.id} className="bracket-match">
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
-                      </div>
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
+                  {bracketData.quarters.map((match, idx) => (
+                    <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                      <div className="bracket-match">
+                        <div className="bracket-team tbd">
+                          <span>A confirmar</span>
+                        </div>
+                        <div className="bracket-team tbd">
+                          <span>A confirmar</span>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -304,16 +313,18 @@ export default function GroupTables() {
               </div>
 
               {/* Semis */}
-              <div className="bracket-round">
+              <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Semifinales</h3>
                 <div className="bracket-matches">
-                  {bracketData.semis.map((match) => (
-                    <div key={match.id} className="bracket-match">
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
-                      </div>
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
+                  {bracketData.semis.map((match, idx) => (
+                    <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                      <div className="bracket-match">
+                        <div className="bracket-team tbd">
+                          <span>A confirmar</span>
+                        </div>
+                        <div className="bracket-team tbd">
+                          <span>A confirmar</span>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -321,15 +332,17 @@ export default function GroupTables() {
               </div>
 
               {/* Final */}
-              <div className="bracket-round bracket-final">
+              <div className="bracket-round round-deep round-last bracket-final">
                 <h3 className="round-title">🏆 Final</h3>
                 <div className="bracket-matches">
-                  <div className="bracket-match final-match">
-                    <div className="bracket-team tbd">
-                      <span>A confirmar</span>
-                    </div>
-                    <div className="bracket-team tbd">
-                      <span>A confirmar</span>
+                  <div className="bracket-match-wrap">
+                    <div className="bracket-match final-match">
+                      <div className="bracket-team tbd">
+                        <span>A confirmar</span>
+                      </div>
+                      <div className="bracket-team tbd">
+                        <span>A confirmar</span>
+                      </div>
                     </div>
                   </div>
                 </div>

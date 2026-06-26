@@ -244,19 +244,35 @@
   animation: fadeIn 0.5s ease-out;
 }
 
+/* Hint de scroll en mobile */
+.bracket-scroll-hint {
+  display: none;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
 .bracket-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
   gap: var(--space-md);
-  align-items: start;
+  align-items: stretch;
   overflow-x: auto;
   padding-bottom: var(--space-lg);
+  -webkit-overflow-scrolling: touch;
 }
 
 .bracket-round {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  min-width: 180px;
+  flex: 1;
+}
+
+/* Las rondas profundas distribuyen sus partidos centrados
+   respecto al par de la ronda anterior */
+.bracket-round.round-deep .bracket-matches {
+  justify-content: space-around;
 }
 
 .round-title {
@@ -271,13 +287,20 @@
   background: var(--color-bg-tertiary);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
 }
 
 .bracket-matches {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   gap: var(--space-sm);
+  flex: 1;
+}
+
+.bracket-match-wrap {
+  display: flex;
+  align-items: center;
 }
 
 .bracket-match {
@@ -286,6 +309,7 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   transition: all var(--transition-fast);
+  flex: 1;
 }
 
 .bracket-match:hover {
@@ -346,25 +370,18 @@
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
-  .bracket-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media (max-width: 1024px) {
   .groups-grid {
     grid-template-columns: 1fr;
   }
-
-  .bracket-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
-@media (max-width: 640px) {
-  .bracket-container {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .bracket-scroll-hint {
+    display: block;
+  }
+  .bracket-round {
+    min-width: 150px;
   }
 }
 
@@ -391,5 +408,14 @@
   .tables-tab {
     padding: 8px 16px;
     font-size: 0.78rem;
+  }
+
+  .bracket-round {
+    min-width: 140px;
+  }
+
+  .bracket-team {
+    font-size: 0.68rem;
+    padding: 6px 8px;
   }
 }

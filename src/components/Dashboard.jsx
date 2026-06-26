@@ -9,10 +9,11 @@ export default function Dashboard() {
   const { user } = useAuth();
   const { fixtures, getAllMatches, getMatchStatus, getUserScore } = useMatches();
   const [selectedGroup, setSelectedGroup] = useState('ALL');
-  const [selectedMatchday, setSelectedMatchday] = useState(0); // 0 = all
+  const [selectedMatchday, setSelectedMatchday] = useState(0); // 0 = all, 1-3 = fechas, 4 = 16avos
 
   const allMatches = useMemo(() => getAllMatches(), [fixtures]);
-  const groupKeys = Object.keys(fixtures.groups);
+  // Excluyo R32 de los chips de grupo (no es un grupo real)
+  const groupKeys = Object.keys(fixtures.groups).filter(k => k !== 'R32');
 
   const filteredMatches = useMemo(() => {
     let filtered = allMatches;
@@ -41,10 +42,11 @@ export default function Dashboard() {
     return byDate;
   }, [filteredMatches]);
 
-  // Stats
-  const totalMatches = allMatches.length;
+  // Stats (sólo cuentan partidos de fase de grupos, 72 en total)
+  const groupStageMatches = allMatches.filter(m => m.matchday <= 3);
+  const totalMatches = groupStageMatches.length;
   const liveMatches = allMatches.filter(m => getMatchStatus(m) === 'live').length;
-  const finishedMatches = allMatches.filter(m => getMatchStatus(m) === 'finished').length;
+  const finishedMatches = groupStageMatches.filter(m => getMatchStatus(m) === 'finished').length;
   const userScore = user ? getUserScore(user.id) : { total: 0, exact: 0, correct: 0, wrong: 0, predicted: 0 };
 
   return (
@@ -150,6 +152,12 @@ export default function Dashboard() {
                 Fecha {md}
               </button>
             ))}
+            <button
+              className={`chip ${selectedMatchday === 4 ? 'active' : ''}`}
+              onClick={() => setSelectedMatchday(4)}
+            >
+              16avos
+            </button>
           </div>
         </div>
       </div>
@@ -180,4 +188,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
