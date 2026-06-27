@@ -1019,7 +1019,13 @@
         "Países Bajos",
         "Marruecos",
         "Estados Unidos",
-        "Bosnia y Herzegovina"
+        "Bosnia y Herzegovina",
+        "Alemania",
+        "Paraguay",
+        "Francia",
+        "Suecia",
+        "Argentina",
+        "Cabo Verde"
       ],
       "matches": [
         {
@@ -1067,6 +1073,42 @@
           "away": "Bosnia y Herzegovina",
           "homeFlag": "🇺🇸",
           "awayFlag": "🇧🇦",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-5",
+          "matchday": 4,
+          "date": "2026-06-29T17:30:00-03:00",
+          "stadium": "Gillette Stadium, Boston",
+          "home": "Alemania",
+          "away": "Paraguay",
+          "homeFlag": "🇩🇪",
+          "awayFlag": "🇵🇾",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-6",
+          "matchday": 4,
+          "date": "2026-06-30T18:00:00-03:00",
+          "stadium": "MetLife Stadium, New Jersey",
+          "home": "Francia",
+          "away": "Suecia",
+          "homeFlag": "🇫🇷",
+          "awayFlag": "🇸🇪",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-7",
+          "matchday": 4,
+          "date": "2026-07-03T19:00:00-03:00",
+          "stadium": "Hard Rock Stadium, Miami",
+          "home": "Argentina",
+          "away": "Cabo Verde",
+          "homeFlag": "🇦🇷",
+          "awayFlag": "🇨🇻",
           "result": null,
           "status": "scheduled"
         }
