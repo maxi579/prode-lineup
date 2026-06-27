@@ -4,6 +4,16 @@ import { Trophy, MapPin, GitBranch } from 'lucide-react';
 import CountryFlag from './CountryFlag';
 import './GroupTables.css';
 
+// Lista de selecciones conocidas para detectar nombres reales en el bracket
+const KNOWN_TEAMS = new Set([
+  'México','Sudáfrica','Corea del Sur','Chequia','Canadá','Bosnia y Herzegovina','Qatar','Suiza',
+  'Brasil','Marruecos','Haití','Escocia','Estados Unidos','Paraguay','Australia','Turquía',
+  'Alemania','Curazao','Costa de Marfil','Ecuador','Países Bajos','Japón','Suecia','Túnez',
+  'Bélgica','Egipto','Irán','Nueva Zelanda','España','Cabo Verde','Arabia Saudita','Uruguay',
+  'Francia','Senegal','Irak','Noruega','Argentina','Argelia','Austria','Jordania',
+  'Portugal','R.D. Congo','Uzbekistán','Colombia','Inglaterra','Croacia','Ghana','Panamá',
+]);
+
 export default function GroupTables() {
   const { fixtures, results } = useMatches();
   const [activeTab, setActiveTab] = useState('tables');
@@ -76,56 +86,50 @@ export default function GroupTables() {
     return groupStandings;
   }, [fixtures, results]);
 
-  // Bracket data based on FIFA 2026 format
+  // Bracket data - cruces confirmados con nombre real; el resto, placeholder por posición
   const bracketData = {
     roundOf32: [
-      { id: 1, home: '1E', away: '3A/B/C/D/F' },
-      { id: 2, home: '1I', away: '3C/D/F/G/H' },
-      { id: 3, home: '2A', away: '2B' },
-      { id: 4, home: '1F', away: '2C' },
+      { id: 1, home: 'Alemania', away: 'Paraguay' },
+      { id: 2, home: 'Francia', away: 'Suecia' },
+      { id: 3, home: 'Sudáfrica', away: 'Canadá' },
+      { id: 4, home: 'Países Bajos', away: 'Marruecos' },
       { id: 5, home: '2K', away: '2L' },
       { id: 6, home: '1H', away: '2J' },
-      { id: 7, home: '1D', away: '3B/E/F/I/J' },
+      { id: 7, home: 'Estados Unidos', away: 'Bosnia y Herzegovina' },
       { id: 8, home: '1G', away: '3A/E/H/I/J' },
-      { id: 9, home: '1C', away: '2F' },
+      { id: 9, home: 'Brasil', away: 'Japón' },
       { id: 10, home: '2E', away: '2I' },
       { id: 11, home: '1A', away: '3C/E/F/H/I' },
       { id: 12, home: '1L', away: '3E/H/I/J/K' },
-      { id: 13, home: '1J', away: '2H' },
+      { id: 13, home: 'Argentina', away: 'Cabo Verde' },
       { id: 14, home: '2D', away: '2G' },
       { id: 15, home: '1B', away: '3E/F/G/I/J' },
       { id: 16, home: '1K', away: '3D/E/I/J/L' },
     ],
     roundOf16: [
-      { id: 17, home: 'G1', away: 'G2', label: 'P1 vs P2' },
-      { id: 18, home: 'G3', away: 'G4', label: 'P3 vs P4' },
-      { id: 19, home: 'G5', away: 'G6', label: 'P5 vs P6' },
-      { id: 20, home: 'G7', away: 'G8', label: 'P7 vs P8' },
-      { id: 21, home: 'G9', away: 'G10', label: 'P9 vs P10' },
-      { id: 22, home: 'G11', away: 'G12', label: 'P11 vs P12' },
-      { id: 23, home: 'G13', away: 'G14', label: 'P13 vs P14' },
-      { id: 24, home: 'G15', away: 'G16', label: 'P15 vs P16' },
+      { id: 17 }, { id: 18 }, { id: 19 }, { id: 20 },
+      { id: 21 }, { id: 22 }, { id: 23 }, { id: 24 },
     ],
     quarters: [
-      { id: 25, label: 'QF1' },
-      { id: 26, label: 'QF2' },
-      { id: 27, label: 'QF3' },
-      { id: 28, label: 'QF4' },
+      { id: 25 }, { id: 26 }, { id: 27 }, { id: 28 },
     ],
     semis: [
-      { id: 29, label: 'SF1' },
-      { id: 30, label: 'SF2' },
+      { id: 29 }, { id: 30 },
     ],
   };
 
-  // Resolve bracket position to team name
+  // Resolve bracket position to team name (o nombre real si ya viene confirmado)
   const resolvePosition = (pos) => {
     if (!pos) return null;
-    // Check if it's a 3rd place entry (multiple groups)
+    // Nombre de equipo real ya confirmado
+    if (KNOWN_TEAMS.has(pos)) {
+      return { label: pos, teamName: pos, isThird: false };
+    }
+    // Tercer puesto (varios grupos)
     if (pos.includes('/')) {
       return { label: `3° ${pos}`, isThird: true };
     }
-    // Parse position like "1E" or "2A"
+    // Posición tipo "1E" o "2A"
     const match = pos.match(/^(\d)([A-L])$/);
     if (!match) return { label: pos, isThird: false };
     const [, posNum, groupKey] = match;
@@ -133,7 +137,6 @@ export default function GroupTables() {
     if (!group) return { label: pos, isThird: false };
     const team = group.teams[parseInt(posNum) - 1];
     if (!team) return { label: pos, isThird: false };
-    // Check if any matches have been played
     const hasResults = team.pj > 0;
     return {
       label: hasResults ? team.name : `${posNum}°${groupKey}`,
