@@ -1025,7 +1025,13 @@
         "Francia",
         "Suecia",
         "Argentina",
-        "Cabo Verde"
+        "Cabo Verde",
+        "Costa de Marfil",
+        "Noruega",
+        "México",
+        "Ecuador",
+        "Australia",
+        "Egipto"
       ],
       "matches": [
         {
@@ -1109,6 +1115,42 @@
           "away": "Cabo Verde",
           "homeFlag": "🇦🇷",
           "awayFlag": "🇨🇻",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-8",
+          "matchday": 4,
+          "date": "2026-06-30T14:00:00-03:00",
+          "stadium": "AT&T Stadium, Dallas",
+          "home": "Costa de Marfil",
+          "away": "Noruega",
+          "homeFlag": "🇨🇮",
+          "awayFlag": "🇳🇴",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-9",
+          "matchday": 4,
+          "date": "2026-06-30T22:00:00-03:00",
+          "stadium": "Estadio Azteca, Ciudad de México",
+          "home": "México",
+          "away": "Ecuador",
+          "homeFlag": "🇲🇽",
+          "awayFlag": "🇪🇨",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-10",
+          "matchday": 4,
+          "date": "2026-07-03T15:00:00-03:00",
+          "stadium": "AT&T Stadium, Dallas",
+          "home": "Australia",
+          "away": "Egipto",
+          "homeFlag": "🇦🇺",
+          "awayFlag": "🇪🇬",
           "result": null,
           "status": "scheduled"
         }
