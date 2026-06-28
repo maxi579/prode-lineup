@@ -1031,7 +1031,19 @@
         "México",
         "Ecuador",
         "Australia",
-        "Egipto"
+        "Egipto",
+        "Inglaterra",
+        "R.D. Congo",
+        "Bélgica",
+        "Senegal",
+        "España",
+        "Austria",
+        "Portugal",
+        "Croacia",
+        "Suiza",
+        "Argelia",
+        "Colombia",
+        "Ghana"
       ],
       "matches": [
         {
@@ -1151,6 +1163,78 @@
           "away": "Egipto",
           "homeFlag": "🇦🇺",
           "awayFlag": "🇪🇬",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-11",
+          "matchday": 4,
+          "date": "2026-07-01T13:00:00-03:00",
+          "stadium": "Mercedes-Benz Stadium, Atlanta",
+          "home": "Inglaterra",
+          "away": "R.D. Congo",
+          "homeFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "awayFlag": "🇨🇩",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-12",
+          "matchday": 4,
+          "date": "2026-07-01T17:00:00-03:00",
+          "stadium": "Lumen Field, Seattle",
+          "home": "Bélgica",
+          "away": "Senegal",
+          "homeFlag": "🇧🇪",
+          "awayFlag": "🇸🇳",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-13",
+          "matchday": 4,
+          "date": "2026-07-02T16:00:00-03:00",
+          "stadium": "SoFi Stadium, Los Ángeles",
+          "home": "España",
+          "away": "Austria",
+          "homeFlag": "🇪🇸",
+          "awayFlag": "🇦🇹",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-14",
+          "matchday": 4,
+          "date": "2026-07-02T20:00:00-03:00",
+          "stadium": "BMO Field, Toronto",
+          "home": "Portugal",
+          "away": "Croacia",
+          "homeFlag": "🇵🇹",
+          "awayFlag": "🇭🇷",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-15",
+          "matchday": 4,
+          "date": "2026-07-03T00:00:00-03:00",
+          "stadium": "BC Place, Vancouver",
+          "home": "Suiza",
+          "away": "Argelia",
+          "homeFlag": "🇨🇭",
+          "awayFlag": "🇩🇿",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R32-16",
+          "matchday": 4,
+          "date": "2026-07-03T22:30:00-03:00",
+          "stadium": "Arrowhead Stadium, Kansas City",
+          "home": "Colombia",
+          "away": "Ghana",
+          "homeFlag": "🇨🇴",
+          "awayFlag": "🇬🇭",
           "result": null,
           "status": "scheduled"
         }

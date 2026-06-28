@@ -419,3 +419,21 @@
     padding: 6px 8px;
   }
 }
+/* ===== RESALTADO DE GANADOR EN EL CUADRO ===== */
+.bracket-team.team-winner {
+  background: rgba(255, 210, 76, 0.12);
+  color: var(--color-text-primary);
+  font-weight: 800;
+}
+
+.bracket-team.team-winner .winner-icon {
+  margin-left: auto;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.bracket-team.team-loser {
+  opacity: 0.45;
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+}

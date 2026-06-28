@@ -86,50 +86,65 @@ export default function GroupTables() {
     return groupStandings;
   }, [fixtures, results]);
 
-  // Bracket data - cruces confirmados con nombre real; el resto, placeholder por posición
-  const bracketData = {
-    roundOf32: [
-      { id: 1, home: 'Alemania', away: 'Paraguay' },
-      { id: 2, home: 'Francia', away: 'Suecia' },
-      { id: 3, home: 'Sudáfrica', away: 'Canadá' },
-      { id: 4, home: 'Países Bajos', away: 'Marruecos' },
-      { id: 5, home: '2K', away: '2L' },
-      { id: 6, home: '1H', away: '2J' },
-      { id: 7, home: 'Estados Unidos', away: 'Bosnia y Herzegovina' },
-      { id: 8, home: '1G', away: '3A/E/H/I/J' },
-      { id: 9, home: 'Brasil', away: 'Japón' },
-      { id: 10, home: 'Costa de Marfil', away: 'Noruega' },
-      { id: 11, home: 'México', away: 'Ecuador' },
-      { id: 12, home: '1L', away: '3E/H/I/J/K' },
-      { id: 13, home: 'Argentina', away: 'Cabo Verde' },
-      { id: 14, home: 'Australia', away: 'Egipto' },
-      { id: 15, home: '1B', away: '3E/F/G/I/J' },
-      { id: 16, home: '1K', away: '3D/E/I/J/L' },
-    ],
-    roundOf16: [
-      { id: 17 }, { id: 18 }, { id: 19 }, { id: 20 },
-      { id: 21 }, { id: 22 }, { id: 23 }, { id: 24 },
-    ],
-    quarters: [
-      { id: 25 }, { id: 26 }, { id: 27 }, { id: 28 },
-    ],
-    semis: [
-      { id: 29 }, { id: 30 },
-    ],
+  // Bracket de 16avos: cada llave vinculada a su match_id en fixtures/results
+  const roundOf32 = [
+    { id: 1, home: 'Alemania', away: 'Paraguay', matchId: 'R32-5' },
+    { id: 2, home: 'Francia', away: 'Suecia', matchId: 'R32-6' },
+    { id: 3, home: 'Sudáfrica', away: 'Canadá', matchId: 'R32-1' },
+    { id: 4, home: 'Países Bajos', away: 'Marruecos', matchId: 'R32-3' },
+    { id: 5, home: 'Portugal', away: 'Croacia', matchId: 'R32-14' },
+    { id: 6, home: 'España', away: 'Austria', matchId: 'R32-13' },
+    { id: 7, home: 'Estados Unidos', away: 'Bosnia y Herzegovina', matchId: 'R32-4' },
+    { id: 8, home: 'Bélgica', away: 'Senegal', matchId: 'R32-12' },
+    { id: 9, home: 'Brasil', away: 'Japón', matchId: 'R32-2' },
+    { id: 10, home: 'Costa de Marfil', away: 'Noruega', matchId: 'R32-8' },
+    { id: 11, home: 'México', away: 'Ecuador', matchId: 'R32-9' },
+    { id: 12, home: 'Inglaterra', away: 'R.D. Congo', matchId: 'R32-11' },
+    { id: 13, home: 'Argentina', away: 'Cabo Verde', matchId: 'R32-7' },
+    { id: 14, home: 'Australia', away: 'Egipto', matchId: 'R32-10' },
+    { id: 15, home: 'Suiza', away: 'Argelia', matchId: 'R32-15' },
+    { id: 16, home: 'Colombia', away: 'Ghana', matchId: 'R32-16' },
+  ];
+
+  // Calcula el ganador de una llave de 16avos según el resultado cargado en Supabase.
+  // Devuelve el nombre del equipo ganador, o null si no hay resultado / empate sin definir.
+  const getWinner = (cross) => {
+    if (!cross?.matchId) return null;
+    const r = results[cross.matchId];
+    if (!r) return null;
+    if (r.homeGoals > r.awayGoals) return cross.home;
+    if (r.awayGoals > r.homeGoals) return cross.away;
+    // Empate: en eliminatorias se define por penales, pero eso no se carga acá.
+    // Lo dejamos sin definir hasta que el resultado tenga un ganador claro.
+    return null;
   };
+
+  // Ganadores de cada par de 16avos => octavos
+  // El par (llave 2i, 2i+1) alimenta el octavo i
+  const roundOf16 = useMemo(() => {
+    const octavos = [];
+    for (let i = 0; i < roundOf32.length; i += 2) {
+      const top = roundOf32[i];
+      const bottom = roundOf32[i + 1];
+      octavos.push({
+        id: 17 + i / 2,
+        homeTeam: getWinner(top),
+        awayTeam: getWinner(bottom),
+      });
+    }
+    return octavos;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results]);
 
   // Resolve bracket position to team name (o nombre real si ya viene confirmado)
   const resolvePosition = (pos) => {
     if (!pos) return null;
-    // Nombre de equipo real ya confirmado
     if (KNOWN_TEAMS.has(pos)) {
       return { label: pos, teamName: pos, isThird: false };
     }
-    // Tercer puesto (varios grupos)
     if (pos.includes('/')) {
       return { label: `3° ${pos}`, isThird: true };
     }
-    // Posición tipo "1E" o "2A"
     const match = pos.match(/^(\d)([A-L])$/);
     if (!match) return { label: pos, isThird: false };
     const [, posNum, groupKey] = match;
@@ -143,6 +158,38 @@ export default function GroupTables() {
       teamName: hasResults ? team.name : null,
       isThird: false,
     };
+  };
+
+  // Render de un equipo dentro de una llave de 16avos, con resaltado de ganador
+  const renderR32Team = (teamName, winner) => {
+    const resolved = resolvePosition(teamName);
+    const hasWinner = winner != null;
+    const isWinner = hasWinner && winner === teamName;
+    const isLoser = hasWinner && !isWinner;
+    return (
+      <div className={`bracket-team ${resolved?.isThird ? 'third-place' : ''} ${isWinner ? 'team-winner' : ''} ${isLoser ? 'team-loser' : ''}`}>
+        {resolved?.teamName && <CountryFlag teamName={resolved.teamName} size={16} />}
+        <span>{resolved?.label || 'TBD'}</span>
+        {isWinner && <Trophy size={11} className="winner-icon" />}
+      </div>
+    );
+  };
+
+  // Render de un equipo ya resuelto (octavos en adelante) por nombre
+  const renderAdvancedTeam = (teamName) => {
+    if (!teamName) {
+      return (
+        <div className="bracket-team tbd">
+          <span>A confirmar</span>
+        </div>
+      );
+    }
+    return (
+      <div className="bracket-team">
+        <CountryFlag teamName={teamName} size={16} />
+        <span>{teamName}</span>
+      </div>
+    );
   };
 
   return (
@@ -256,20 +303,13 @@ export default function GroupTables() {
               <div className="bracket-round has-pairs">
                 <h3 className="round-title">16avos de Final</h3>
                 <div className="bracket-matches">
-                  {bracketData.roundOf32.map((match, idx) => {
-                    const homeResolved = resolvePosition(match.home);
-                    const awayResolved = resolvePosition(match.away);
+                  {roundOf32.map((match, idx) => {
+                    const winner = getWinner(match);
                     return (
                       <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
                         <div className="bracket-match">
-                          <div className={`bracket-team ${homeResolved?.isThird ? 'third-place' : ''}`}>
-                            {homeResolved?.teamName && <CountryFlag teamName={homeResolved.teamName} size={16} />}
-                            <span>{homeResolved?.label || 'TBD'}</span>
-                          </div>
-                          <div className={`bracket-team ${awayResolved?.isThird ? 'third-place' : ''}`}>
-                            {awayResolved?.teamName && <CountryFlag teamName={awayResolved.teamName} size={16} />}
-                            <span>{awayResolved?.label || 'TBD'}</span>
-                          </div>
+                          {renderR32Team(match.home, winner)}
+                          {renderR32Team(match.away, winner)}
                         </div>
                       </div>
                     );
@@ -281,15 +321,11 @@ export default function GroupTables() {
               <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Octavos de Final</h3>
                 <div className="bracket-matches">
-                  {bracketData.roundOf16.map((match, idx) => (
+                  {roundOf16.map((match, idx) => (
                     <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
                       <div className="bracket-match">
-                        <div className="bracket-team tbd">
-                          <span>A confirmar</span>
-                        </div>
-                        <div className="bracket-team tbd">
-                          <span>A confirmar</span>
-                        </div>
+                        {renderAdvancedTeam(match.homeTeam)}
+                        {renderAdvancedTeam(match.awayTeam)}
                       </div>
                     </div>
                   ))}
@@ -300,15 +336,11 @@ export default function GroupTables() {
               <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Cuartos de Final</h3>
                 <div className="bracket-matches">
-                  {bracketData.quarters.map((match, idx) => (
-                    <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                  {[25, 26, 27, 28].map((id, idx) => (
+                    <div key={id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
                       <div className="bracket-match">
-                        <div className="bracket-team tbd">
-                          <span>A confirmar</span>
-                        </div>
-                        <div className="bracket-team tbd">
-                          <span>A confirmar</span>
-                        </div>
+                        <div className="bracket-team tbd"><span>A confirmar</span></div>
+                        <div className="bracket-team tbd"><span>A confirmar</span></div>
                       </div>
                     </div>
                   ))}
@@ -319,15 +351,11 @@ export default function GroupTables() {
               <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Semifinales</h3>
                 <div className="bracket-matches">
-                  {bracketData.semis.map((match, idx) => (
-                    <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                  {[29, 30].map((id, idx) => (
+                    <div key={id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
                       <div className="bracket-match">
-                        <div className="bracket-team tbd">
-                          <span>A confirmar</span>
-                        </div>
-                        <div className="bracket-team tbd">
-                          <span>A confirmar</span>
-                        </div>
+                        <div className="bracket-team tbd"><span>A confirmar</span></div>
+                        <div className="bracket-team tbd"><span>A confirmar</span></div>
                       </div>
                     </div>
                   ))}
@@ -340,12 +368,8 @@ export default function GroupTables() {
                 <div className="bracket-matches">
                   <div className="bracket-match-wrap">
                     <div className="bracket-match final-match">
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
-                      </div>
-                      <div className="bracket-team tbd">
-                        <span>A confirmar</span>
-                      </div>
+                      <div className="bracket-team tbd"><span>A confirmar</span></div>
+                      <div className="bracket-team tbd"><span>A confirmar</span></div>
                     </div>
                   </div>
                 </div>
