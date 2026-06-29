@@ -28,7 +28,7 @@ export function MatchProvider({ children }) {
 
     const resultsMap = {};
     data.forEach(r => {
-      resultsMap[r.match_id] = { homeGoals: r.home_goals, awayGoals: r.away_goals, updatedAt: r.updated_at };
+      resultsMap[r.match_id] = { homeGoals: r.home_goals, awayGoals: r.away_goals, penaltyWinner: r.penalty_winner, updatedAt: r.updated_at };
     });
     setResults(resultsMap);
   };

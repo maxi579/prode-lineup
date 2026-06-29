@@ -114,8 +114,8 @@ export default function GroupTables() {
     if (!r) return null;
     if (r.homeGoals > r.awayGoals) return cross.home;
     if (r.awayGoals > r.homeGoals) return cross.away;
-    // Empate: en eliminatorias se define por penales, pero eso no se carga acá.
-    // Lo dejamos sin definir hasta que el resultado tenga un ganador claro.
+    // Empate en los 90/120: se define por penales (columna penalty_winner)
+    if (r.penaltyWinner) return r.penaltyWinner;
     return null;
   };
 
