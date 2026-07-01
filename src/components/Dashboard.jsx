@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   const allMatches = useMemo(() => getAllMatches(), [fixtures]);
   // Excluyo R32 de los chips de grupo (no es un grupo real)
-  const groupKeys = Object.keys(fixtures.groups).filter(k => k !== 'R32');
+  const groupKeys = Object.keys(fixtures.groups).filter(k => k !== 'R32' && k !== 'R16');
 
   const filteredMatches = useMemo(() => {
     let filtered = allMatches;
@@ -42,11 +42,12 @@ export default function Dashboard() {
     return byDate;
   }, [filteredMatches]);
 
-  // Stats (sólo cuentan partidos de fase de grupos, 72 en total)
-  const groupStageMatches = allMatches.filter(m => m.matchday <= 3);
-  const totalMatches = groupStageMatches.length;
+  // Stats: el Mundial completo tiene 104 partidos (fijo).
+  // Finalizados = todos los partidos cargados que ya tienen resultado (grupos + eliminatorias).
+  const TOTAL_WORLD_CUP_MATCHES = 104;
+  const totalMatches = TOTAL_WORLD_CUP_MATCHES;
   const liveMatches = allMatches.filter(m => getMatchStatus(m) === 'live').length;
-  const finishedMatches = groupStageMatches.filter(m => getMatchStatus(m) === 'finished').length;
+  const finishedMatches = allMatches.filter(m => getMatchStatus(m) === 'finished').length;
   const userScore = user ? getUserScore(user.id) : { total: 0, exact: 0, correct: 0, wrong: 0, predicted: 0 };
 
   return (
@@ -157,6 +158,12 @@ export default function Dashboard() {
               onClick={() => setSelectedMatchday(4)}
             >
               16avos
+            </button>
+            <button
+              className={`chip ${selectedMatchday === 5 ? 'active' : ''}`}
+              onClick={() => setSelectedMatchday(5)}
+            >
+              Octavos
             </button>
           </div>
         </div>

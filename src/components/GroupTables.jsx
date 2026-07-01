@@ -119,22 +119,47 @@ export default function GroupTables() {
     return null;
   };
 
-  // Ganadores de cada par de 16avos => octavos
-  // El par (llave 2i, 2i+1) alimenta el octavo i
+  // Octavos de final: cruces confirmados con su match_id (para leer resultado real).
+  // Si un cruce todavía no está confirmado, se completa con el ganador calculado de 16avos.
+  const roundOf16Confirmed = [
+    { pairIndex: 0, home: 'Paraguay', away: 'Francia', matchId: 'R16-2' },
+    { pairIndex: 1, home: 'Canadá', away: 'Marruecos', matchId: 'R16-1' },
+    { pairIndex: 2, home: null, away: null, matchId: null },
+    { pairIndex: 3, home: null, away: null, matchId: null },
+    { pairIndex: 4, home: 'Brasil', away: 'Noruega', matchId: 'R16-3' },
+    { pairIndex: 5, home: 'México', away: 'Inglaterra', matchId: 'R16-4' },
+    { pairIndex: 6, home: null, away: null, matchId: null },
+    { pairIndex: 7, home: null, away: null, matchId: null },
+  ];
+
   const roundOf16 = useMemo(() => {
-    const octavos = [];
-    for (let i = 0; i < roundOf32.length; i += 2) {
+    return roundOf16Confirmed.map((oct, idx) => {
+      const i = idx * 2;
       const top = roundOf32[i];
       const bottom = roundOf32[i + 1];
-      octavos.push({
-        id: 17 + i / 2,
-        homeTeam: getWinner(top),
-        awayTeam: getWinner(bottom),
-      });
-    }
-    return octavos;
+      // Si el cruce está confirmado usamos esos equipos; si no, el ganador calculado
+      const homeTeam = oct.home || getWinner(top);
+      const awayTeam = oct.away || getWinner(bottom);
+      return {
+        id: 17 + idx,
+        matchId: oct.matchId,
+        home: homeTeam,
+        away: awayTeam,
+      };
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [results]);
+
+  // Ganador de un octavo (por resultado real cargado en R16-x)
+  const getR16Winner = (oct) => {
+    if (!oct?.matchId) return null;
+    const r = results[oct.matchId];
+    if (!r) return null;
+    if (r.homeGoals > r.awayGoals) return oct.home;
+    if (r.awayGoals > r.homeGoals) return oct.away;
+    if (r.penaltyWinner) return r.penaltyWinner;
+    return null;
+  };
 
   // Resolve bracket position to team name (o nombre real si ya viene confirmado)
   const resolvePosition = (pos) => {
@@ -175,8 +200,8 @@ export default function GroupTables() {
     );
   };
 
-  // Render de un equipo ya resuelto (octavos en adelante) por nombre
-  const renderAdvancedTeam = (teamName) => {
+  // Render de un equipo ya resuelto (octavos en adelante) por nombre, con resaltado opcional
+  const renderAdvancedTeam = (teamName, winner = undefined) => {
     if (!teamName) {
       return (
         <div className="bracket-team tbd">
@@ -184,10 +209,14 @@ export default function GroupTables() {
         </div>
       );
     }
+    const hasWinner = winner != null;
+    const isWinner = hasWinner && winner === teamName;
+    const isLoser = hasWinner && !isWinner;
     return (
-      <div className="bracket-team">
+      <div className={`bracket-team ${isWinner ? 'team-winner' : ''} ${isLoser ? 'team-loser' : ''}`}>
         <CountryFlag teamName={teamName} size={16} />
         <span>{teamName}</span>
+        {isWinner && <Trophy size={11} className="winner-icon" />}
       </div>
     );
   };
@@ -321,14 +350,17 @@ export default function GroupTables() {
               <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Octavos de Final</h3>
                 <div className="bracket-matches">
-                  {roundOf16.map((match, idx) => (
-                    <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
-                      <div className="bracket-match">
-                        {renderAdvancedTeam(match.homeTeam)}
-                        {renderAdvancedTeam(match.awayTeam)}
+                  {roundOf16.map((match, idx) => {
+                    const winner = getR16Winner(match);
+                    return (
+                      <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                        <div className="bracket-match">
+                          {renderAdvancedTeam(match.home, winner)}
+                          {renderAdvancedTeam(match.away, winner)}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 

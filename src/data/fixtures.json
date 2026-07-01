@@ -1239,6 +1239,69 @@
           "status": "scheduled"
         }
       ]
+    },
+    "R16": {
+      "name": "Octavos de Final",
+      "teams": [
+        "Canadá",
+        "Marruecos",
+        "Paraguay",
+        "Francia",
+        "Brasil",
+        "Noruega",
+        "México",
+        "Inglaterra"
+      ],
+      "matches": [
+        {
+          "id": "R16-1",
+          "matchday": 5,
+          "date": "2026-07-04T14:00:00-03:00",
+          "stadium": "NRG Stadium, Houston",
+          "home": "Canadá",
+          "away": "Marruecos",
+          "homeFlag": "🇨🇦",
+          "awayFlag": "🇲🇦",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R16-2",
+          "matchday": 5,
+          "date": "2026-07-04T18:00:00-03:00",
+          "stadium": "Lincoln Financial Field, Filadelfia",
+          "home": "Paraguay",
+          "away": "Francia",
+          "homeFlag": "🇵🇾",
+          "awayFlag": "🇫🇷",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R16-3",
+          "matchday": 5,
+          "date": "2026-07-05T17:00:00-03:00",
+          "stadium": "MetLife Stadium, New Jersey",
+          "home": "Brasil",
+          "away": "Noruega",
+          "homeFlag": "🇧🇷",
+          "awayFlag": "🇳🇴",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R16-4",
+          "matchday": 5,
+          "date": "2026-07-05T21:00:00-03:00",
+          "stadium": "Estadio Azteca, Ciudad de México",
+          "home": "México",
+          "away": "Inglaterra",
+          "homeFlag": "🇲🇽",
+          "awayFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "result": null,
+          "status": "scheduled"
+        }
+      ]
     }
   },
   "scoring": {
