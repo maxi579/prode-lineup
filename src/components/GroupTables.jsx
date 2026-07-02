@@ -24,7 +24,7 @@ export default function GroupTables() {
 
     Object.entries(fixtures.groups).forEach(([groupKey, group]) => {
       // Saltar rondas eliminatorias (no son grupos reales)
-      if (groupKey === 'R32') return;
+      if (groupKey === 'R32' || groupKey === 'R16') return;
       const teamStats = {};
       group.teams.forEach(team => {
         teamStats[team] = {
