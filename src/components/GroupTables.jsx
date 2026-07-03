@@ -124,8 +124,8 @@ export default function GroupTables() {
   const roundOf16Confirmed = [
     { pairIndex: 0, home: 'Paraguay', away: 'Francia', matchId: 'R16-2' },
     { pairIndex: 1, home: 'Canadá', away: 'Marruecos', matchId: 'R16-1' },
-    { pairIndex: 2, home: null, away: null, matchId: null },
-    { pairIndex: 3, home: null, away: null, matchId: null },
+    { pairIndex: 2, home: 'Portugal', away: 'España', matchId: 'R16-5' },
+    { pairIndex: 3, home: 'Estados Unidos', away: 'Bélgica', matchId: 'R16-6' },
     { pairIndex: 4, home: 'Brasil', away: 'Noruega', matchId: 'R16-3' },
     { pairIndex: 5, home: 'México', away: 'Inglaterra', matchId: 'R16-4' },
     { pairIndex: 6, home: null, away: null, matchId: null },

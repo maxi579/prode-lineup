@@ -1250,7 +1250,11 @@
         "Brasil",
         "Noruega",
         "México",
-        "Inglaterra"
+        "Inglaterra",
+        "Portugal",
+        "España",
+        "Estados Unidos",
+        "Bélgica"
       ],
       "matches": [
         {
@@ -1298,6 +1302,30 @@
           "away": "Inglaterra",
           "homeFlag": "🇲🇽",
           "awayFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R16-5",
+          "matchday": 5,
+          "date": "2026-07-06T16:00:00-03:00",
+          "stadium": "AT&T Stadium, Dallas",
+          "home": "Portugal",
+          "away": "España",
+          "homeFlag": "🇵🇹",
+          "awayFlag": "🇪🇸",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R16-6",
+          "matchday": 5,
+          "date": "2026-07-06T21:00:00-03:00",
+          "stadium": "Lumen Field, Seattle",
+          "home": "Estados Unidos",
+          "away": "Bélgica",
+          "homeFlag": "🇺🇸",
+          "awayFlag": "🇧🇪",
           "result": null,
           "status": "scheduled"
         }
