@@ -161,6 +161,44 @@ export default function GroupTables() {
     return null;
   };
 
+  // Cuartos de final: cruces confirmados con su match_id (para leer resultado real).
+  // Si un cruce no está confirmado, se completa con el ganador calculado de octavos.
+  // Cada cuarto se alimenta del par de octavos (2i, 2i+1).
+  const quartersConfirmed = [
+    { home: 'Francia', away: 'Marruecos', matchId: 'QF-1' },
+    { home: null, away: null, matchId: null },
+    { home: null, away: null, matchId: null },
+    { home: null, away: null, matchId: null },
+  ];
+
+  const quarters = useMemo(() => {
+    return quartersConfirmed.map((qf, idx) => {
+      const i = idx * 2;
+      const topOct = roundOf16[i];
+      const bottomOct = roundOf16[i + 1];
+      const homeTeam = qf.home || getR16Winner(topOct);
+      const awayTeam = qf.away || getR16Winner(bottomOct);
+      return {
+        id: 25 + idx,
+        matchId: qf.matchId,
+        home: homeTeam,
+        away: awayTeam,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results, roundOf16]);
+
+  // Ganador de un cuarto (por resultado real cargado en QF-x, cuando exista)
+  const getQFWinner = (qf) => {
+    if (!qf?.matchId) return null;
+    const r = results[qf.matchId];
+    if (!r) return null;
+    if (r.homeGoals > r.awayGoals) return qf.home;
+    if (r.awayGoals > r.homeGoals) return qf.away;
+    if (r.penaltyWinner) return r.penaltyWinner;
+    return null;
+  };
+
   // Resolve bracket position to team name (o nombre real si ya viene confirmado)
   const resolvePosition = (pos) => {
     if (!pos) return null;
@@ -368,14 +406,17 @@ export default function GroupTables() {
               <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Cuartos de Final</h3>
                 <div className="bracket-matches">
-                  {[25, 26, 27, 28].map((id, idx) => (
-                    <div key={id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
-                      <div className="bracket-match">
-                        <div className="bracket-team tbd"><span>A confirmar</span></div>
-                        <div className="bracket-team tbd"><span>A confirmar</span></div>
+                  {quarters.map((match, idx) => {
+                    const winner = getQFWinner(match);
+                    return (
+                      <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                        <div className="bracket-match">
+                          {renderAdvancedTeam(match.home, winner)}
+                          {renderAdvancedTeam(match.away, winner)}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 

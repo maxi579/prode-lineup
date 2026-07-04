@@ -1358,6 +1358,27 @@
           "status": "scheduled"
         }
       ]
+    },
+    "QF": {
+      "name": "Cuartos de Final",
+      "teams": [
+        "Francia",
+        "Marruecos"
+      ],
+      "matches": [
+        {
+          "id": "QF-1",
+          "matchday": 6,
+          "date": "2026-07-09T17:00:00-03:00",
+          "stadium": "Gillette Stadium, Boston",
+          "home": "Francia",
+          "away": "Marruecos",
+          "homeFlag": "🇫🇷",
+          "awayFlag": "🇲🇦",
+          "result": null,
+          "status": "scheduled"
+        }
+      ]
     }
   },
   "scoring": {
