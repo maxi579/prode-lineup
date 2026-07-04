@@ -128,8 +128,8 @@ export default function GroupTables() {
     { pairIndex: 3, home: 'Estados Unidos', away: 'Bélgica', matchId: 'R16-6' },
     { pairIndex: 4, home: 'Brasil', away: 'Noruega', matchId: 'R16-3' },
     { pairIndex: 5, home: 'México', away: 'Inglaterra', matchId: 'R16-4' },
-    { pairIndex: 6, home: null, away: null, matchId: null },
-    { pairIndex: 7, home: null, away: null, matchId: null },
+    { pairIndex: 6, home: 'Argentina', away: 'Egipto', matchId: 'R16-7' },
+    { pairIndex: 7, home: 'Suiza', away: 'Colombia', matchId: 'R16-8' },
   ];
 
   const roundOf16 = useMemo(() => {

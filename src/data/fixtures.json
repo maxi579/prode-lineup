@@ -1254,7 +1254,11 @@
         "Portugal",
         "España",
         "Estados Unidos",
-        "Bélgica"
+        "Bélgica",
+        "Argentina",
+        "Egipto",
+        "Suiza",
+        "Colombia"
       ],
       "matches": [
         {
@@ -1326,6 +1330,30 @@
           "away": "Bélgica",
           "homeFlag": "🇺🇸",
           "awayFlag": "🇧🇪",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R16-7",
+          "matchday": 5,
+          "date": "2026-07-07T13:00:00-03:00",
+          "stadium": "Mercedes-Benz Stadium, Atlanta",
+          "home": "Argentina",
+          "away": "Egipto",
+          "homeFlag": "🇦🇷",
+          "awayFlag": "🇪🇬",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "R16-8",
+          "matchday": 5,
+          "date": "2026-07-07T16:00:00-03:00",
+          "stadium": "BC Place, Vancouver",
+          "home": "Suiza",
+          "away": "Colombia",
+          "homeFlag": "🇨🇭",
+          "awayFlag": "🇨🇴",
           "result": null,
           "status": "scheduled"
         }
