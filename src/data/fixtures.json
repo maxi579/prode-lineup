@@ -1348,7 +1348,7 @@
         {
           "id": "R16-8",
           "matchday": 5,
-          "date": "2026-07-07T16:00:00-03:00",
+          "date": "2026-07-07T17:00:00-03:00",
           "stadium": "BC Place, Vancouver",
           "home": "Suiza",
           "away": "Colombia",
@@ -1363,7 +1363,11 @@
       "name": "Cuartos de Final",
       "teams": [
         "Francia",
-        "Marruecos"
+        "Marruecos",
+        "España",
+        "Bélgica",
+        "Noruega",
+        "Inglaterra"
       ],
       "matches": [
         {
@@ -1375,6 +1379,30 @@
           "away": "Marruecos",
           "homeFlag": "🇫🇷",
           "awayFlag": "🇲🇦",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "QF-2",
+          "matchday": 6,
+          "date": "2026-07-10T16:00:00-03:00",
+          "stadium": "SoFi Stadium, Los Ángeles",
+          "home": "España",
+          "away": "Bélgica",
+          "homeFlag": "🇪🇸",
+          "awayFlag": "🇧🇪",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "QF-3",
+          "matchday": 6,
+          "date": "2026-07-11T18:00:00-03:00",
+          "stadium": "Hard Rock Stadium, Miami",
+          "home": "Noruega",
+          "away": "Inglaterra",
+          "homeFlag": "🇳🇴",
+          "awayFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
           "result": null,
           "status": "scheduled"
         }

@@ -166,8 +166,8 @@ export default function GroupTables() {
   // Cada cuarto se alimenta del par de octavos (2i, 2i+1).
   const quartersConfirmed = [
     { home: 'Francia', away: 'Marruecos', matchId: 'QF-1' },
-    { home: null, away: null, matchId: null },
-    { home: null, away: null, matchId: null },
+    { home: 'España', away: 'Bélgica', matchId: 'QF-2' },
+    { home: 'Noruega', away: 'Inglaterra', matchId: 'QF-3' },
     { home: null, away: null, matchId: null },
   ];
 
