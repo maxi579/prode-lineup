@@ -168,7 +168,7 @@ export default function GroupTables() {
     { home: 'Francia', away: 'Marruecos', matchId: 'QF-1' },
     { home: 'España', away: 'Bélgica', matchId: 'QF-2' },
     { home: 'Noruega', away: 'Inglaterra', matchId: 'QF-3' },
-    { home: null, away: null, matchId: null },
+    { home: 'Argentina', away: 'Suiza', matchId: 'QF-4' },
   ];
 
   const quarters = useMemo(() => {

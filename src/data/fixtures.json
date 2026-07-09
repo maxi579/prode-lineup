@@ -1348,7 +1348,7 @@
         {
           "id": "R16-8",
           "matchday": 5,
-          "date": "2026-07-07T17:00:00-03:00",
+          "date": "2026-07-07T16:00:00-03:00",
           "stadium": "BC Place, Vancouver",
           "home": "Suiza",
           "away": "Colombia",
@@ -1367,7 +1367,9 @@
         "España",
         "Bélgica",
         "Noruega",
-        "Inglaterra"
+        "Inglaterra",
+        "Argentina",
+        "Suiza"
       ],
       "matches": [
         {
@@ -1397,12 +1399,24 @@
         {
           "id": "QF-3",
           "matchday": 6,
-          "date": "2026-07-11T18:00:00-03:00",
+          "date": "2026-07-11T17:00:00-03:00",
           "stadium": "Hard Rock Stadium, Miami",
           "home": "Noruega",
           "away": "Inglaterra",
           "homeFlag": "🇳🇴",
           "awayFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "QF-4",
+          "matchday": 6,
+          "date": "2026-07-11T22:00:00-03:00",
+          "stadium": "Arrowhead Stadium, Kansas City",
+          "home": "Argentina",
+          "away": "Suiza",
+          "homeFlag": "🇦🇷",
+          "awayFlag": "🇨🇭",
           "result": null,
           "status": "scheduled"
         }
