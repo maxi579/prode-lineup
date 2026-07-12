@@ -199,6 +199,42 @@ export default function GroupTables() {
     return null;
   };
 
+  // Semifinales: cruces confirmados con su match_id.
+  // Si no está confirmado, se completa con el ganador calculado de cuartos.
+  // Cada semi se alimenta del par de cuartos (2i, 2i+1).
+  const semisConfirmed = [
+    { home: 'Francia', away: 'España', matchId: 'SF-1' },
+    { home: 'Inglaterra', away: 'Argentina', matchId: 'SF-2' },
+  ];
+
+  const semis = useMemo(() => {
+    return semisConfirmed.map((sf, idx) => {
+      const i = idx * 2;
+      const topQF = quarters[i];
+      const bottomQF = quarters[i + 1];
+      const homeTeam = sf.home || getQFWinner(topQF);
+      const awayTeam = sf.away || getQFWinner(bottomQF);
+      return {
+        id: 29 + idx,
+        matchId: sf.matchId,
+        home: homeTeam,
+        away: awayTeam,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results, quarters]);
+
+  // Ganador de una semi (por resultado real cargado en SF-x, cuando exista)
+  const getSFWinner = (sf) => {
+    if (!sf?.matchId) return null;
+    const r = results[sf.matchId];
+    if (!r) return null;
+    if (r.homeGoals > r.awayGoals) return sf.home;
+    if (r.awayGoals > r.homeGoals) return sf.away;
+    if (r.penaltyWinner) return r.penaltyWinner;
+    return null;
+  };
+
   // Resolve bracket position to team name (o nombre real si ya viene confirmado)
   const resolvePosition = (pos) => {
     if (!pos) return null;
@@ -424,14 +460,17 @@ export default function GroupTables() {
               <div className="bracket-round round-deep has-pairs">
                 <h3 className="round-title">Semifinales</h3>
                 <div className="bracket-matches">
-                  {[29, 30].map((id, idx) => (
-                    <div key={id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
-                      <div className="bracket-match">
-                        <div className="bracket-team tbd"><span>A confirmar</span></div>
-                        <div className="bracket-team tbd"><span>A confirmar</span></div>
+                  {semis.map((match, idx) => {
+                    const winner = getSFWinner(match);
+                    return (
+                      <div key={match.id} className={`bracket-match-wrap ${idx % 2 === 0 ? 'pair-top' : 'pair-bottom'}`}>
+                        <div className="bracket-match">
+                          {renderAdvancedTeam(match.home, winner)}
+                          {renderAdvancedTeam(match.away, winner)}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 

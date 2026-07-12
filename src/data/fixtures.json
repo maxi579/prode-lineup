@@ -1399,7 +1399,7 @@
         {
           "id": "QF-3",
           "matchday": 6,
-          "date": "2026-07-11T18:00:00-03:00",
+          "date": "2026-07-11T17:00:00-03:00",
           "stadium": "Hard Rock Stadium, Miami",
           "home": "Noruega",
           "away": "Inglaterra",
@@ -1417,6 +1417,41 @@
           "away": "Suiza",
           "homeFlag": "🇦🇷",
           "awayFlag": "🇨🇭",
+          "result": null,
+          "status": "scheduled"
+        }
+      ]
+    },
+    "SF": {
+      "name": "Semifinales",
+      "teams": [
+        "Francia",
+        "España",
+        "Inglaterra",
+        "Argentina"
+      ],
+      "matches": [
+        {
+          "id": "SF-1",
+          "matchday": 7,
+          "date": "2026-07-14T16:00:00-03:00",
+          "stadium": "AT&T Stadium, Arlington",
+          "home": "Francia",
+          "away": "España",
+          "homeFlag": "🇫🇷",
+          "awayFlag": "🇪🇸",
+          "result": null,
+          "status": "scheduled"
+        },
+        {
+          "id": "SF-2",
+          "matchday": 7,
+          "date": "2026-07-15T16:00:00-03:00",
+          "stadium": "Mercedes-Benz Stadium, Atlanta",
+          "home": "Inglaterra",
+          "away": "Argentina",
+          "homeFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "awayFlag": "🇦🇷",
           "result": null,
           "status": "scheduled"
         }
