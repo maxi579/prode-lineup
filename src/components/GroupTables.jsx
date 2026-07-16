@@ -235,6 +235,25 @@ export default function GroupTables() {
     return null;
   };
 
+  // Final: ya confirmada (España vs Argentina), vinculada a FINAL-1
+  const finalMatch = useMemo(() => {
+    const confirmedHome = 'España';
+    const confirmedAway = 'Argentina';
+    const homeTeam = confirmedHome || getSFWinner(semis[0]);
+    const awayTeam = confirmedAway || getSFWinner(semis[1]);
+    return { matchId: 'FINAL-1', home: homeTeam, away: awayTeam };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results, semis]);
+
+  const getFinalWinner = () => {
+    const r = results[finalMatch.matchId];
+    if (!r) return null;
+    if (r.homeGoals > r.awayGoals) return finalMatch.home;
+    if (r.awayGoals > r.homeGoals) return finalMatch.away;
+    if (r.penaltyWinner) return r.penaltyWinner;
+    return null;
+  };
+
   // Resolve bracket position to team name (o nombre real si ya viene confirmado)
   const resolvePosition = (pos) => {
     if (!pos) return null;
@@ -480,8 +499,8 @@ export default function GroupTables() {
                 <div className="bracket-matches">
                   <div className="bracket-match-wrap">
                     <div className="bracket-match final-match">
-                      <div className="bracket-team tbd"><span>A confirmar</span></div>
-                      <div className="bracket-team tbd"><span>A confirmar</span></div>
+                      {renderAdvancedTeam(finalMatch.home, getFinalWinner())}
+                      {renderAdvancedTeam(finalMatch.away, getFinalWinner())}
                     </div>
                   </div>
                 </div>

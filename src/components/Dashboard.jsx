@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   const allMatches = useMemo(() => getAllMatches(), [fixtures]);
   // Excluyo R32 de los chips de grupo (no es un grupo real)
-  const groupKeys = Object.keys(fixtures.groups).filter(k => k !== 'R32' && k !== 'R16' && k !== 'QF' && k !== 'SF');
+  const groupKeys = Object.keys(fixtures.groups).filter(k => !['R32','R16','QF','SF','3P','FINAL'].includes(k));
 
   const filteredMatches = useMemo(() => {
     let filtered = allMatches;
@@ -176,6 +176,18 @@ export default function Dashboard() {
               onClick={() => setSelectedMatchday(7)}
             >
               Semis
+            </button>
+            <button
+              className={`chip ${selectedMatchday === 8 ? 'active' : ''}`}
+              onClick={() => setSelectedMatchday(8)}
+            >
+              3er Puesto
+            </button>
+            <button
+              className={`chip ${selectedMatchday === 9 ? 'active' : ''}`}
+              onClick={() => setSelectedMatchday(9)}
+            >
+              Final
             </button>
           </div>
         </div>
