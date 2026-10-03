@@ -1,16 +1,59 @@
-# React + Vite
+# ⚽ Prode LineUp — Mundial 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma de pronósticos del Mundial 2026 que hice para los empleados de **LineUp**. Estuvo en uso durante todo el torneo: cada participante cargaba sus pronósticos, competía en un ranking en vivo y quien sumara más puntos al final ganaba la camiseta oficial de Argentina.
 
-Currently, two official plugins are available:
+🔗 **App:** [prode-lineup.vercel.app](https://prode-lineup.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Funcionalidades
 
-## React Compiler
+- **Login con Google** (Supabase Auth) y perfiles de usuario.
+- **Pronósticos por partido**: se bloquean automáticamente 15 minutos antes del inicio.
+- **Sistema de puntos**: 3 puntos por resultado exacto y 1 por acertar ganador o empate.
+- **Ranking en vivo** con puntos, exactos y aciertos de cada participante.
+- **Tablas de los 12 grupos** y **cuadro eliminatorio completo**: 16avos, octavos, cuartos, semis, 3er puesto y final, con definición por penales.
+- **Muro social** donde los participantes dejan mensajes.
+- Diseño responsive pensado para usarlo desde el celular.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the ESLint configuration
+| Capa | Tecnología |
+|---|---|
+| Frontend | React 19, React Router 7, Vite |
+| Backend / DB | Supabase (PostgreSQL + Auth) |
+| Deploy | Vercel |
+| Íconos / banderas | lucide-react, flag-icons |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Desafíos que resolví
+
+- **Límite de 1.000 filas de Supabase**: cuando creció la cantidad de pronósticos, el ranking dejó de contar algunos. Lo resolví paginando las consultas de a 1.000 filas (`src/context/MatchContext.jsx`).
+- **Mantenimiento en vivo**: durante el torneo fui cargando los cruces eliminatorios a medida que se definían y corrigiendo horarios y estadios, sin cortar el servicio.
+- **Penales en eliminatorias**: el cuadro registra quién gana por penales cuando el partido termina empatado.
+
+## Estructura
+
+```
+src/
+├── components/   # Dashboard, MatchCard, Leaderboard, GroupTables, Wall, Prizes...
+├── context/      # AuthContext (sesión) y MatchContext (partidos, pronósticos, puntos)
+├── data/         # fixtures.json: los 104 partidos del Mundial
+└── lib/          # cliente de Supabase
+```
+
+## Correrlo localmente
+
+```bash
+npm install
+cp .env.example .env   # completar con los datos de tu proyecto de Supabase
+npm run dev
+```
+
+Variables necesarias:
+
+```
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
+
+---
+
+Hecho por [maxi579](https://github.com/maxi579).
