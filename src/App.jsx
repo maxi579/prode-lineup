@@ -9,6 +9,7 @@ import Leaderboard from './components/Leaderboard';
 import Wall from './components/Wall';
 import Prizes from './components/Prizes';
 import GroupTables from './components/GroupTables';
+import { soloDemo } from './lib/demo';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -41,6 +42,11 @@ function ProtectedRoute({ children }) {
 function AppLayout({ children }) {
   return (
     <>
+      {soloDemo && (
+        <div className="demo-banner">
+          Demo del Prode LineUp · resultados reales del Mundial 2026, participantes de ejemplo
+        </div>
+      )}
       <Navbar />
       <main style={{ flex: 1 }}>
         {children}
@@ -116,7 +122,8 @@ function AppRoutes() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
+      {/* basename: en GitHub Pages la app vive en /prode-lineup/ */}
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
         <AuthProvider>
           <MatchProvider>
             <AppRoutes />

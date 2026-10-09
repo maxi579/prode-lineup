@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:demo": "VITE_SOLO_DEMO=true VITE_BASE=/prode-lineup/ VITE_SUPABASE_URL= VITE_SUPABASE_ANON_KEY= vite build --outDir dist-demo && cp dist-demo/index.html dist-demo/404.html && touch dist-demo/.nojekyll"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

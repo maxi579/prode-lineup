@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from './AuthContext';
 import fixturesData from '../data/fixtures.json';
+import { soloDemo, resultadosDemo, pronosticosDemo, perfilesDemo } from '../lib/demo';
 
 const MatchContext = createContext(null);
 
@@ -23,6 +24,12 @@ export function MatchProvider({ children }) {
   }, [user]);
 
   const fetchResults = async () => {
+    if (soloDemo) {
+      const resultados = resultadosDemo();
+      setResults(resultados);
+      setPredictions(pronosticosDemo(resultados));
+      return;
+    }
     const { data, error } = await supabase.from('results').select('*');
     if (error) { console.error('Error cargando resultados:', error); return; }
 
@@ -37,6 +44,7 @@ export function MatchProvider({ children }) {
   // (Supabase tiene un límite máximo de 1000 filas por consulta,
   // .limit(10000) no lo supera)
   const fetchPredictions = async () => {
+    if (soloDemo) return; // ya se cargaron junto con los resultados
     let allData = [];
     let from = 0;
     const pageSize = 1000;
@@ -172,6 +180,11 @@ export function MatchProvider({ children }) {
 
   // Trae TODOS los perfiles paginando de 1000 en 1000
   const getLeaderboard = async () => {
+    if (soloDemo) {
+      return perfilesDemo()
+        .map(profile => ({ userId: profile.id, name: profile.name, avatar: profile.avatar, email: profile.email, ...getUserScore(profile.id) }))
+        .sort((a, b) => b.total - a.total || b.exact - a.exact);
+    }
     let allProfiles = [];
     let from = 0;
     const pageSize = 1000;

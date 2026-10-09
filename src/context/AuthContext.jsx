@@ -1,13 +1,16 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { soloDemo, USUARIO_DEMO } from '../lib/demo';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // En la demo se entra directo como invitado, sin login
+  const [user, setUser] = useState(soloDemo ? USUARIO_DEMO : null);
+  const [loading, setLoading] = useState(!soloDemo);
 
   useEffect(() => {
+    if (soloDemo) return;
     // Verificar si hay sesión activa al cargar la app
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
@@ -89,6 +92,7 @@ export function AuthProvider({ children }) {
 
   // Cerrar sesión
   const logout = async () => {
+    if (soloDemo) return;
     await supabase.auth.signOut();
     setUser(null);
   };

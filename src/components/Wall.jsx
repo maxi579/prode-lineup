@@ -1,17 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
+import { soloDemo, mensajesDemo } from '../lib/demo';
 import { MessageSquare, Send, Flame } from 'lucide-react';
 import './Wall.css';
 
 export default function Wall() {
   const { user } = useAuth();
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => (soloDemo ? mensajesDemo() : []));
   const [newMessage, setNewMessage] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!soloDemo);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
+    if (soloDemo) return;
     fetchMessages();
 
     // Escuchar mensajes nuevos en tiempo real
@@ -50,6 +52,15 @@ export default function Wall() {
   const handleSend = async (e) => {
     e.preventDefault();
     if (!newMessage.trim() || !user) return;
+
+    // En la demo el mensaje se muestra pero no se guarda en ningún lado
+    if (soloDemo) {
+      setMessages(prev => [...prev, {
+        id: `demo-${Date.now()}`, user_id: user.id, user_name: user.name, avatar: user.avatar, text: newMessage.trim(), created_at: new Date().toISOString(),
+      }]);
+      setNewMessage('');
+      return;
+    }
 
     const { error } = await supabase.from('messages').insert({
       user_id: user.id,
