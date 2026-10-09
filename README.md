@@ -1,57 +1,59 @@
-# ⚽ Prode LineUp — Mundial 2026
+# ⚽ Prode LineUp — World Cup 2026
 
-Plataforma de pronósticos del Mundial 2026 que hice para los empleados de **LineUp**. Estuvo en uso durante todo el torneo: cada participante cargaba sus pronósticos, competía en un ranking en vivo y quien sumara más puntos al final ganaba la camiseta oficial de Argentina.
+🇪🇸 [Leer en español](README.es.md)
 
-🔗 **Demo interactiva:** [maxi579.github.io/prode-lineup](https://maxi579.github.io/prode-lineup/) — con los resultados reales del Mundial 2026 y participantes de ejemplo, sin necesidad de login.
+A World Cup 2026 prediction game I built for the employees of **LineUp**. It was used throughout the whole tournament: each participant submitted predictions, competed on a live leaderboard, and whoever had the most points at the end won an official Argentina jersey. (*Prode* is the Argentine name for this kind of prediction pool.)
 
-## Funcionalidades
+🔗 **Interactive demo:** [maxi579.github.io/prode-lineup](https://maxi579.github.io/prode-lineup/) — with the real World Cup 2026 results and sample players, no login required.
 
-- **Login con Google** (Supabase Auth) y perfiles de usuario.
-- **Pronósticos por partido**: se bloquean automáticamente 15 minutos antes del inicio.
-- **Sistema de puntos**: 3 puntos por resultado exacto y 1 por acertar ganador o empate.
-- **Ranking en vivo** con puntos, exactos y aciertos de cada participante.
-- **Tablas de los 12 grupos** y **cuadro eliminatorio completo**: 16avos, octavos, cuartos, semis, 3er puesto y final, con definición por penales.
-- **Muro social** donde los participantes dejan mensajes.
-- Diseño responsive pensado para usarlo desde el celular.
+## Features
+
+- **Google sign-in** (Supabase Auth) and user profiles.
+- **Per-match predictions** that lock automatically 15 minutes before kickoff.
+- **Scoring system:** 3 points for the exact score, 1 point for the right winner or draw.
+- **Live leaderboard** with points, exact scores and correct results for every player.
+- **Standings for all 12 groups** and the **full knockout bracket** — round of 32, round of 16, quarterfinals, semifinals, third place and final, including penalty shootouts.
+- **Social wall** where players post messages.
+- Responsive, mobile-first design.
 
 ## Stack
 
-| Capa | Tecnología |
+| Layer | Technology |
 |---|---|
 | Frontend | React 19, React Router 7, Vite |
 | Backend / DB | Supabase (PostgreSQL + Auth) |
-| Deploy | Vercel |
-| Íconos / banderas | lucide-react, flag-icons |
+| Hosting | Vercel (production), GitHub Pages (demo) |
+| Icons / flags | lucide-react, flag-icons |
 
-## Desafíos que resolví
+## Problems I solved
 
-- **Límite de 1.000 filas de Supabase**: cuando creció la cantidad de pronósticos, el ranking dejó de contar algunos. Lo resolví paginando las consultas de a 1.000 filas (`src/context/MatchContext.jsx`).
-- **Mantenimiento en vivo**: durante el torneo fui cargando los cruces eliminatorios a medida que se definían y corrigiendo horarios y estadios, sin cortar el servicio.
-- **Penales en eliminatorias**: el cuadro registra quién gana por penales cuando el partido termina empatado.
+- **Supabase's 1,000-row limit:** as predictions grew, the leaderboard silently stopped counting some of them. I fixed it by paginating queries in 1,000-row pages (`src/context/MatchContext.jsx`).
+- **Live maintenance:** during the tournament I added knockout fixtures as they were decided and fixed kickoff times and venues — without taking the app down.
+- **Penalty shootouts:** the bracket records who advances on penalties when a knockout match ends in a draw.
 
-## Estructura
+## Project structure
 
 ```
 src/
 ├── components/   # Dashboard, MatchCard, Leaderboard, GroupTables, Wall, Prizes...
-├── context/      # AuthContext (sesión) y MatchContext (partidos, pronósticos, puntos)
-├── data/         # fixtures.json (los 104 partidos) y resultados.json (resultados reales)
-└── lib/          # cliente de Supabase y modo demo
+├── context/      # AuthContext (session) and MatchContext (matches, predictions, scoring)
+├── data/         # fixtures.json (all 104 matches) and resultados.json (real results)
+└── lib/          # Supabase client and demo mode
 ```
 
-## Modo demo
+## Demo mode
 
-`npm run build:demo` genera en `dist-demo/` una versión que no usa Supabase: entra directo como invitado, toma los resultados reales de `src/data/resultados.json` y arma el ranking con participantes inventados (pronósticos generados con semilla fija, así el ranking es siempre el mismo). Los datos de los participantes reales no se publican. Está lista para GitHub Pages (base `/prode-lineup/` y `404.html` para las rutas).
+`npm run build:demo` builds a version in `dist-demo/` that doesn't use Supabase: it signs you in as a guest, reads the real results from `src/data/resultados.json` and fills the leaderboard with made-up players (predictions generated from a fixed seed, so the leaderboard is always the same). No data from the real participants is published. It's ready for GitHub Pages (`/prode-lineup/` base path and a `404.html` for client-side routes).
 
-## Correrlo localmente
+## Running locally
 
 ```bash
 npm install
-cp .env.example .env   # completar con los datos de tu proyecto de Supabase
+cp .env.example .env   # fill in your Supabase project settings
 npm run dev
 ```
 
-Variables necesarias:
+Required variables:
 
 ```
 VITE_SUPABASE_URL=
@@ -60,4 +62,4 @@ VITE_SUPABASE_ANON_KEY=
 
 ---
 
-Hecho por [maxi579](https://github.com/maxi579).
+Built by [Máximo Nuñez](https://maxi579.github.io).
