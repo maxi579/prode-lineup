@@ -6,7 +6,7 @@ import './Leaderboard.css';
 
 export default function Leaderboard() {
   const { user } = useAuth();
-  const { getLeaderboard } = useMatches();
+  const { getLeaderboard, predictions, results } = useMatches();
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,9 @@ export default function Leaderboard() {
       setLoading(false);
     };
     fetchLeaderboard();
-  }, []);
+    // Se recalcula cuando llegan los pronósticos y resultados (si se entra directo al ranking, pueden llegar después)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [predictions, results]);
 
   const getRankIcon = (index) => {
     if (index === 0) return <Crown size={20} className="rank-icon gold" />;

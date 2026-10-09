@@ -9,11 +9,14 @@ const MatchContext = createContext(null);
 export function MatchProvider({ children }) {
   const { user } = useAuth();
   const [fixtures] = useState(fixturesData);
-  const [predictions, setPredictions] = useState({});
-  const [results, setResults] = useState({});
-  const [loading, setLoading] = useState(true);
+  // En la demo los datos están en el código: se cargan desde el primer render
+  // (así funciona aunque se entre directo a una página, por ejemplo /leaderboard)
+  const [results, setResults] = useState(() => (soloDemo ? resultadosDemo() : {}));
+  const [predictions, setPredictions] = useState(() => (soloDemo ? pronosticosDemo(resultadosDemo()) : {}));
+  const [loading, setLoading] = useState(!soloDemo);
 
   useEffect(() => {
+    if (soloDemo) return;
     const loadData = async () => {
       setLoading(true);
       await fetchResults();
@@ -24,12 +27,6 @@ export function MatchProvider({ children }) {
   }, [user]);
 
   const fetchResults = async () => {
-    if (soloDemo) {
-      const resultados = resultadosDemo();
-      setResults(resultados);
-      setPredictions(pronosticosDemo(resultados));
-      return;
-    }
     const { data, error } = await supabase.from('results').select('*');
     if (error) { console.error('Error cargando resultados:', error); return; }
 
@@ -44,7 +41,6 @@ export function MatchProvider({ children }) {
   // (Supabase tiene un límite máximo de 1000 filas por consulta,
   // .limit(10000) no lo supera)
   const fetchPredictions = async () => {
-    if (soloDemo) return; // ya se cargaron junto con los resultados
     let allData = [];
     let from = 0;
     const pageSize = 1000;
