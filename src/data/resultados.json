@@ -1,1 +1,730 @@
-[]
+[
+ {
+  "match_id": "3P-1",
+  "home_goals": 4,
+  "away_goals": 6,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "A1",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-06-11 21:05:26.178018+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "A2",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "A3",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "A4",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "A5",
+  "home_goals": 0,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "A6",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-06-25 03:04:30.525881+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "B1",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-06-12 21:00:00.420878+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "B2",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "B3",
+  "home_goals": 4,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "B4",
+  "home_goals": 6,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "B5",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "B6",
+  "home_goals": 3,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "C1",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "C2",
+  "home_goals": 0,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "C3",
+  "home_goals": 3,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "C4",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "C5",
+  "home_goals": 0,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "C6",
+  "home_goals": 4,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "D1",
+  "home_goals": 4,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "D2",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "D3",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "D4",
+  "home_goals": 0,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "D5",
+  "home_goals": 3,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "D6",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "E1",
+  "home_goals": 7,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "E2",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "E3",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "E4",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "E5",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "E6",
+  "home_goals": 0,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "F1",
+  "home_goals": 2,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "F2",
+  "home_goals": 5,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "F3",
+  "home_goals": 5,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "F4",
+  "home_goals": 0,
+  "away_goals": 4,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "F5",
+  "home_goals": 1,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "F6",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "FINAL-1",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 22:09:57.656396+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "G1",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "G2",
+  "home_goals": 2,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "G3",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "G4",
+  "home_goals": 1,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "G5",
+  "home_goals": 1,
+  "away_goals": 5,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "G6",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "H1",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "H2",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "H3",
+  "home_goals": 4,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "H4",
+  "home_goals": 2,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "H5",
+  "home_goals": 0,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "H6",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "I1",
+  "home_goals": 3,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "I2",
+  "home_goals": 1,
+  "away_goals": 4,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "I3",
+  "home_goals": 3,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "I4",
+  "home_goals": 3,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "I5",
+  "home_goals": 1,
+  "away_goals": 4,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "I6",
+  "home_goals": 5,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "J1",
+  "home_goals": 3,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "J2",
+  "home_goals": 3,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "J3",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "J4",
+  "home_goals": 1,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "J5",
+  "home_goals": 1,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "J6",
+  "home_goals": 3,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "K1",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "K2",
+  "home_goals": 1,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "K3",
+  "home_goals": 5,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "K4",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "K5",
+  "home_goals": 3,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "K6",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "L1",
+  "home_goals": 4,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "L2",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "L3",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "L4",
+  "home_goals": 0,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "L5",
+  "home_goals": 0,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "L6",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "QF-1",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "QF-2",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-11 02:29:18.924829+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "QF-3",
+  "home_goals": 1,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "QF-4",
+  "home_goals": 3,
+  "away_goals": 1,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-1",
+  "home_goals": 0,
+  "away_goals": 3,
+  "updated_at": "2026-07-04 23:41:17.931286+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-2",
+  "home_goals": 0,
+  "away_goals": 1,
+  "updated_at": "2026-07-04 23:41:36.572815+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-3",
+  "home_goals": 1,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-4",
+  "home_goals": 2,
+  "away_goals": 3,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-5",
+  "home_goals": 0,
+  "away_goals": 1,
+  "updated_at": "2026-07-07 02:52:26.780134+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-6",
+  "home_goals": 1,
+  "away_goals": 4,
+  "updated_at": "2026-07-07 02:51:21.025082+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-7",
+  "home_goals": 3,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R16-8",
+  "home_goals": 0,
+  "away_goals": 0,
+  "updated_at": "2026-07-08 00:08:53.196649+00",
+  "penalty_winner": "Suiza"
+ },
+ {
+  "match_id": "R32-1",
+  "home_goals": 0,
+  "away_goals": 1,
+  "updated_at": "2026-06-28 21:49:46.012976+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-10",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-07-04 00:50:48.051393+00",
+  "penalty_winner": "Egipto"
+ },
+ {
+  "match_id": "R32-11",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-01 18:05:50.13626+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-12",
+  "home_goals": 3,
+  "away_goals": 2,
+  "updated_at": "2026-07-02 04:48:14.665136+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-13",
+  "home_goals": 3,
+  "away_goals": 0,
+  "updated_at": "2026-07-02 21:37:38.72763+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-14",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-07-03 01:15:37.906839+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-15",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-16",
+  "home_goals": 1,
+  "away_goals": 0,
+  "updated_at": "2026-07-04 18:27:19.74989+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-2",
+  "home_goals": 2,
+  "away_goals": 1,
+  "updated_at": "2026-06-29 20:05:19.305686+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-3",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-06-30 04:28:32.131256+00",
+  "penalty_winner": "Marruecos"
+ },
+ {
+  "match_id": "R32-4",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-07-02 04:49:01.201148+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-5",
+  "home_goals": 1,
+  "away_goals": 1,
+  "updated_at": "2026-06-29 23:20:25.663191+00",
+  "penalty_winner": "Paraguay"
+ },
+ {
+  "match_id": "R32-6",
+  "home_goals": 3,
+  "away_goals": 0,
+  "updated_at": "2026-07-01 03:19:29.35266+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-7",
+  "home_goals": 3,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-8",
+  "home_goals": 1,
+  "away_goals": 2,
+  "updated_at": "2026-06-30 21:01:15.345731+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "R32-9",
+  "home_goals": 2,
+  "away_goals": 0,
+  "updated_at": "2026-07-01 04:08:36.768565+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "SF-1",
+  "home_goals": 0,
+  "away_goals": 2,
+  "updated_at": "2026-07-19 01:28:58.808597+00",
+  "penalty_winner": null
+ },
+ {
+  "match_id": "SF-2",
+  "home_goals": 1,
+  "away_goals": 2,
+  "updated_at": "2026-07-16 00:01:57.644646+00",
+  "penalty_winner": null
+ }
+]

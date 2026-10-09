@@ -2,7 +2,7 @@
 
 Plataforma de pronósticos del Mundial 2026 que hice para los empleados de **LineUp**. Estuvo en uso durante todo el torneo: cada participante cargaba sus pronósticos, competía en un ranking en vivo y quien sumara más puntos al final ganaba la camiseta oficial de Argentina.
 
-🔗 **App:** [prode-lineup.vercel.app](https://prode-lineup.vercel.app)
+🔗 **Demo interactiva:** [maxi579.github.io/prode-lineup](https://maxi579.github.io/prode-lineup/) — con los resultados reales del Mundial 2026 y participantes de ejemplo, sin necesidad de login.
 
 ## Funcionalidades
 
@@ -35,9 +35,13 @@ Plataforma de pronósticos del Mundial 2026 que hice para los empleados de **Lin
 src/
 ├── components/   # Dashboard, MatchCard, Leaderboard, GroupTables, Wall, Prizes...
 ├── context/      # AuthContext (sesión) y MatchContext (partidos, pronósticos, puntos)
-├── data/         # fixtures.json: los 104 partidos del Mundial
-└── lib/          # cliente de Supabase
+├── data/         # fixtures.json (los 104 partidos) y resultados.json (resultados reales)
+└── lib/          # cliente de Supabase y modo demo
 ```
+
+## Modo demo
+
+`npm run build:demo` genera en `dist-demo/` una versión que no usa Supabase: entra directo como invitado, toma los resultados reales de `src/data/resultados.json` y arma el ranking con participantes inventados (pronósticos generados con semilla fija, así el ranking es siempre el mismo). Los datos de los participantes reales no se publican. Está lista para GitHub Pages (base `/prode-lineup/` y `404.html` para las rutas).
 
 ## Correrlo localmente
 
